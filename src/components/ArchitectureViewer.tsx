@@ -42,40 +42,40 @@ export const ArchitectureViewer: React.FC = () => {
       guarantee: "100% Citation Verifiability / Zero Ungrounded Assertions"
     },
     agentic: {
-      title: "Bounded Agentic Loop Architecture",
-      subtitle: "Deterministic Finite-State Machine with Permission Boundary Enforcement",
+      title: "Deterministic/Controlled Agentic Workflow",
+      subtitle: "Controlled Dual-Pass Agentic Verification Pipeline (Trusted Compliance Agent)",
       nodes: [
         {
           id: "goal",
-          label: "1. Goal Contract Validation",
-          tech: "OAuth2 & JWT Scopes",
-          latency: "3ms",
-          details: "Enforces authorized actor role boundaries, maximum step limits, and hard token budget caps."
+          label: "1. Document Intake & Coordinate Chunking",
+          tech: "PyPDF & Structural Chunking",
+          latency: "18ms",
+          details: "Extracts structural blocks, text spans, and bounding coordinates from complex regulatory directives."
         },
         {
           id: "planner",
-          label: "2. Schema-Constrained Planner",
-          tech: "Pydantic V2 Strict JSON",
-          latency: "210ms",
-          details: "Generates explicit typed tool call invocations matching validated JSON schemas."
+          label: "2. Hybrid Retrieval & Cross-Encoder Reranking",
+          tech: "Qdrant + BM25 + BGE Reranker",
+          latency: "45ms",
+          details: "Fuses sparse lexical search and dense embeddings with Reciprocal Rank Fusion, scored by deep cross-attention."
         },
         {
           id: "guard",
-          label: "3. Pre-Flight State Verification",
-          tech: "Deterministic System Check",
-          latency: "12ms",
-          details: "Validates database locks, entity state, and idempotency keys before any mutation occurs."
+          label: "3. Schema-Constrained Agentic Synthesis",
+          tech: "Pydantic V2 Strict Validation",
+          latency: "120ms",
+          details: "Synthesizes regulatory requirements strictly bounded to retrieved context with exact character offsets."
         },
         {
           id: "exec",
-          label: "4. Audited Tool Invocation",
-          tech: "HMAC Signed Webhook",
-          latency: "45ms",
-          details: "Executes target enterprise API with tamper-evident audit commit and human escalation fallback."
+          label: "4. Dual-Pass Provenance Attestation",
+          tech: "SHA-256 Token Span Attestation",
+          latency: "15ms",
+          details: "Validates citation spans against cryptographic token hashes; fails closed on any ungrounded claim."
         }
       ],
-      totalLatency: "270ms per cycle",
-      guarantee: "Zero Runaway Recursion / Strict Reversibility"
+      totalLatency: "< 198ms verification pipeline",
+      guarantee: "Zero Hallucination Tolerance / 100% Citation Provenance"
     },
     geospatial: {
       title: "Geospatial Intelligence Mesh",
@@ -114,40 +114,40 @@ export const ArchitectureViewer: React.FC = () => {
       guarantee: "Sub-pixel Boundary Precision & Real-time Alerting"
     },
     security: {
-      title: "Zero-Trust Security Gateway",
-      subtitle: "Inline High-Throughput Rust Proxy & OWASP LLM Defense",
+      title: "Zero-Trust Security Layer",
+      subtitle: "Hexagonal Architecture, Open Policy Agent (OPA) & Policy-Based Access Control",
       nodes: [
         {
           id: "inspect",
-          label: "1. Inbound Stream Inspection",
-          tech: "Rust Tokio Proxy Core",
-          latency: "1.8ms",
-          details: "Parses payload stream; normalizes unicode homoglyphs and decodes base64 exploit vectors."
+          label: "1. Security Gateway & Inbound Dispatch",
+          tech: "Java 21 / Spring Security Gateway",
+          latency: "1.2ms",
+          details: "Intercepts request streams, validates JWT credentials, and normalizes payload parameters."
         },
         {
           id: "filter",
-          label: "2. Semantic Injection Classifier",
-          tech: "ONNX Runtime (Local CPU)",
-          latency: "4.2ms",
-          details: "Scores prompt vector distance against adversarial jailbreak clusters without external hops."
+          label: "2. Policy Evaluation Engine",
+          tech: "Open Policy Agent (OPA / Rego)",
+          latency: "1.5ms",
+          details: "Evaluates declarative policy rules with sub-millisecond local PBAC decision matrices."
         },
         {
           id: "mask",
-          label: "3. Reversible PII Pseudonymization",
-          tech: "AES-256 Vault Tokenizer",
-          latency: "1.1ms",
-          details: "Replaces national IDs, payment tokens, and client names with volatile keyed pseudonyms."
+          label: "3. Hexagonal Domain Decoupling",
+          tech: "Ports & Adapters Architecture",
+          latency: "0.5ms",
+          details: "Enforces strict layer boundaries isolating domain logic from infrastructure or database dependencies."
         },
         {
           id: "audit",
           label: "4. Tamper-Evident Ledger Commit",
-          tech: "HMAC-SHA256 Audit Log",
+          tech: "PostgreSQL Append-Only Ledger",
           latency: "0.8ms",
-          details: "Writes immutable audit trail containing prompt hash, token cost, and policy decision."
+          details: "Writes immutable audit logs containing decision signatures, policy hashes, and actor telemetry."
         }
       ],
-      totalLatency: "< 7.9ms total proxy overhead",
-      guarantee: "99.8% OWASP Attack Interception / Zero PII Leakage"
+      totalLatency: "< 4.0ms total evaluation overhead",
+      guarantee: "100% ArchUnit Fitness / Zero Trust PBAC Enforcement"
     }
   };
 
@@ -186,7 +186,7 @@ export const ArchitectureViewer: React.FC = () => {
                 : 'text-[#70706B] hover:text-[#1A1A1A]'
             }`}
           >
-            Bounded Agents
+            Controlled Agentic Workflow
           </button>
           <button
             onClick={() => setActiveArch('geospatial')}

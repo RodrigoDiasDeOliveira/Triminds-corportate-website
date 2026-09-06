@@ -116,7 +116,7 @@ export const AUDIT_REALITY_DATA: Record<Language, LocalizedAuditItem[]> = {
       concept: 'AI With Purpose',
       status: 'consolidating',
       claim: 'AI applied strictly where it creates measurable value.',
-      githubEvidence: 'Geo AI (satellite imagery interpretation), SmartImageLab (computer vision), Compliance (hybrid retrieval). AI is never added for mere decoration.',
+      githubEvidence: 'Geo AI (satellite imagery interpretation), ObjectScanner V2 (mobile computer vision / industrial counting), Compliance (hybrid retrieval), VectorAI (developer tooling). AI is never added for mere decoration.',
       analysis: 'Direction is very clear. To sustain "measurable" universally, an AI Value Measurement Framework (accuracy, latency, cost per query) is scheduled.',
       architecturalVerdict: 'Strong direction; formal measurement framework in rollout.'
     },
@@ -254,7 +254,7 @@ export const AUDIT_REALITY_DATA: Record<Language, LocalizedAuditItem[]> = {
       concept: 'AI With Purpose (IA com Propósito)',
       status: 'consolidating',
       claim: 'IA aplicada estritamente onde ela gera valor mensurável.',
-      githubEvidence: 'Geo AI (interpretação de imagens de satélite), SmartImageLab (visão computacional), Compliance (recuperação híbrida). Nenhuma IA adicionada como adorno.',
+      githubEvidence: 'Geo AI (interpretação de imagens de satélite), ObjectScanner V2 (visão computacional mobile / contagem industrial), Compliance (recuperação híbrida), VectorAI (ferramentas para desenvolvedores). Nenhuma IA adicionada como adorno.',
       analysis: 'Direção muito forte. Para sustentar a mensuração uniforme, está previsto no roadmap o AI Value Measurement Framework.',
       architecturalVerdict: 'Direção confirmada; framework de métricas em implementação.'
     },
@@ -392,7 +392,7 @@ export const AUDIT_REALITY_DATA: Record<Language, LocalizedAuditItem[]> = {
       concept: 'AI With Purpose (IA con Propósito)',
       status: 'consolidating',
       claim: 'IA aplicada estrictamente donde genera valor cuantificable.',
-      githubEvidence: 'Geo AI (análisis de imágenes satelitales), SmartImageLab (visión por computador), Compliance (búsqueda híbrida). Sin IA decorativa.',
+      githubEvidence: 'Geo AI (análisis de imágenes satelitales), ObjectScanner V2 (visión por computador móvil / conteo industrial), Compliance (búsqueda híbrida), VectorAI (herramientas para desarrolladores). Sin IA decorativa.',
       analysis: 'Dirección muy sólida. Para estandarizar métricas cuantitativas, está programado el AI Value Measurement Framework.',
       architecturalVerdict: 'Dirección confirmada; marco de medición en despliegue.'
     },

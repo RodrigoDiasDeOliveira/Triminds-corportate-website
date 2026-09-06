@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Check, Lock, X } from 'lucide-react';
+import { Shield, X } from 'lucide-react';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const GdprBanner: React.FC = () => {
   const [visible, setVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const consent = localStorage.getItem('triminds_gdpr_consent');
@@ -28,18 +30,19 @@ export const GdprBanner: React.FC = () => {
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2 text-[#1A1A1A] font-mono text-xs font-bold uppercase">
           <Shield className="w-4 h-4 text-emerald-600" />
-          <span>European Sovereign Compliance</span>
+          <span>{t('gdpr.title')}</span>
         </div>
         <button 
           onClick={handleAcceptEssential}
           className="text-[#70706B] hover:text-[#1A1A1A] cursor-pointer"
+          aria-label="Close"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
       <p className="mt-2 text-[#4A4A45] leading-relaxed text-[11px]">
-        Triminds strictly adheres to EU GDPR and the EU AI Act. We operate zero third-party commercial trackers. Client telemetry and session diagnostics are processed exclusively within ISO 27001 certified European data centers (Frankfurt/Paris).
+        {t('gdpr.message')}
       </p>
 
       <div className="mt-4 flex items-center justify-end gap-2 font-mono text-[11px]">
@@ -47,13 +50,13 @@ export const GdprBanner: React.FC = () => {
           onClick={handleAcceptEssential}
           className="px-3 py-1.5 rounded bg-[#F4F4F1] hover:bg-[#EAEAE6] text-[#1A1A1A] border border-[#D1D1CD] transition-colors cursor-pointer"
         >
-          Essential Only
+          {t('gdpr.essential')}
         </button>
         <button
           onClick={handleAcceptAll}
           className="px-3 py-1.5 rounded bg-[#1A1A1A] hover:bg-black text-white font-medium transition-colors cursor-pointer"
         >
-          Acknowledge & Confirm
+          {t('gdpr.confirm')}
         </button>
       </div>
     </div>

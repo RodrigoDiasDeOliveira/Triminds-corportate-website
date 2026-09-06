@@ -7,12 +7,58 @@ export type NavigationTab =
   | 'about' 
   | 'contact';
 
+export type Language = 'en' | 'pt' | 'es';
+
+export type ProjectCategory = 
+  | 'what-we-built' 
+  | 'what-we-are-exploring' 
+  | 'what-is-planned';
+
+export type TruthStatus = 
+  | 'implemented'  // ✅ Existe e está implementado
+  | 'partial'      // 🟡 Existe parcialmente/experimentalmente
+  | 'planned'      // 🔵 Está planejado
+  | 'not-present'; // ❌ Não existe
+
+export interface RealTechnologyStack {
+  languages: string[];
+  frameworks: string[];
+  libraries: string[];
+  databases: string[];
+  cloud: string[];
+  iac: string[];
+  apis: string[];
+  testing: string[];
+  ciCd: string[];
+  observability: string[];
+}
+
+export interface RealArchitectureVerification {
+  documented: string;
+  implemented: string;
+  presentedOnSite: string;
+  coherenceScore: '100% Coherent' | 'Verified Alignment' | 'Architectural Delta Flagged';
+}
+
+export interface ProjectRepositoryInfo {
+  name: string;
+  isPrivate: boolean;
+  visibilityBadge: 'Public Repository' | 'Private Enterprise Monorepo' | 'Proprietary IP';
+  url?: string;
+  testSuiteStatus: string;
+  ciCdPipeline: string;
+  adrReferences: string[];
+}
+
 export interface CaseStudy {
   id: string;
   title: string;
   subtitle: string;
   tag: string;
   sector: string;
+  category: ProjectCategory;
+  truthStatus: TruthStatus;
+  honestScope: string; // "Designed for..." instead of "Runs at..." where applicable
   whatItProves: string;
   problem: string;
   context: string;
@@ -21,8 +67,11 @@ export interface CaseStudy {
     components: string[];
     diagramText?: string;
   };
+  realArchitectureVerification: RealArchitectureVerification;
+  realTechnologies: RealTechnologyStack;
+  repository: ProjectRepositoryInfo;
   engineering: string[];
-  technology: string[];
+  technology: string[]; // High-level tags
   evolution: string;
   challenges: string[];
   decisions: {
@@ -35,7 +84,6 @@ export interface CaseStudy {
     description: string;
   }[];
   evidence: string;
-  image?: string;
 }
 
 export interface ResearchArticle {
@@ -91,8 +139,6 @@ export interface TelemetryMetric {
   status: 'nominal' | 'optimal' | 'verified';
 }
 
-export type Language = 'en' | 'pt' | 'es';
-
 export type EvidenceStatus = 'sustained' | 'consolidating' | 'aspirational';
 
 export interface AuditRealityItem {
@@ -103,4 +149,13 @@ export interface AuditRealityItem {
   githubEvidence: string;
   analysis: string;
   architecturalVerdict: string;
+}
+
+export interface ProductionGate {
+  id: string;
+  name: string;
+  phase: string;
+  status: 'verified' | 'in-progress' | 'pending';
+  evidence: string;
+  details: string;
 }

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Cpu, ShieldCheck, Search, Activity, Globe, Lock, ArrowRight, CheckCircle2, GitBranch } from 'lucide-react';
+import { Cpu, Search, Activity, Globe, Lock, ArrowRight, CheckCircle2, GitBranch } from 'lucide-react';
 import { AI_SYSTEMS } from '../data/aiSystemsData';
 import { ArchitectureViewer } from './ArchitectureViewer';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const AiSystemsSection: React.FC = () => {
+  const { t } = useLanguage();
   const [activeSystemId, setActiveSystemId] = useState<string>(AI_SYSTEMS[0].id);
 
   const activeSystem = AI_SYSTEMS.find(s => s.id === activeSystemId) || AI_SYSTEMS[0];
@@ -29,13 +31,13 @@ export const AiSystemsSection: React.FC = () => {
       <div className="space-y-3 max-w-3xl">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#EAEAE6] border border-[#D1D1CD] text-[#1A1A1A] text-xs font-mono">
           <Cpu className="w-3.5 h-3.5" />
-          <span>PHASE 1 & 2 // AI SYSTEMS & TECHNICAL SPECIFICATION</span>
+          <span>{t('ai.badge')}</span>
         </div>
         <h2 className="text-2xl sm:text-4xl font-light text-[#1A1A1A] tracking-tight">
-          Architectures Engineered for <span className="font-serif italic font-normal">Production Reliability</span>
+          {t('ai.title')} <span className="font-serif italic font-normal">{t('ai.titleHighlight')}</span>
         </h2>
         <p className="text-sm sm:text-base text-[#4A4A45] leading-relaxed">
-          Triminds constructs resilient, mathematically verified intelligent systems designed to operate without human cognitive overload, token budget runaway, or opaque black-box assumptions.
+          {t('ai.subtitle')}
         </p>
       </div>
 
@@ -66,7 +68,7 @@ export const AiSystemsSection: React.FC = () => {
                 </p>
               </div>
               <div className="text-[11px] font-mono text-[#1A1A1A] font-semibold flex items-center gap-1">
-                <span>View Specification</span>
+                <span>{t('ai.viewSpec')}</span>
                 <ArrowRight className="w-3 h-3" />
               </div>
             </button>
@@ -79,7 +81,7 @@ export const AiSystemsSection: React.FC = () => {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-[#EAEAE6] pb-6">
           <div className="space-y-1.5 max-w-2xl">
             <span className="text-[10px] font-mono uppercase tracking-wider text-[#70706B] font-semibold">
-              CORE SYSTEM SPECIFICATION
+              {t('ai.coreSpec')}
             </span>
             <h3 className="text-2xl font-light text-[#1A1A1A] tracking-tight">{activeSystem.name}</h3>
             <p className="text-xs sm:text-sm text-[#4A4A45] leading-relaxed pt-1">
@@ -90,19 +92,19 @@ export const AiSystemsSection: React.FC = () => {
           {/* Technical Specs Callout */}
           <div className="grid grid-cols-2 gap-3 p-4 rounded-lg bg-[#F4F4F1] border border-[#D1D1CD] text-xs font-mono min-w-[280px]">
             <div>
-              <span className="text-[#70706B] text-[10px] block uppercase">Latency SLO</span>
+              <span className="text-[#70706B] text-[10px] block uppercase">{t('ai.latencySlo')}</span>
               <span className="text-emerald-700 font-semibold">{activeSystem.technicalSpecs.latency}</span>
             </div>
             <div>
-              <span className="text-[#70706B] text-[10px] block uppercase">Uptime Reliability</span>
+              <span className="text-[#70706B] text-[10px] block uppercase">{t('ai.uptime')}</span>
               <span className="text-[#1A1A1A] font-semibold">{activeSystem.technicalSpecs.reliability}</span>
             </div>
             <div>
-              <span className="text-[#70706B] text-[10px] block uppercase">Data Residency</span>
+              <span className="text-[#70706B] text-[10px] block uppercase">{t('ai.residency')}</span>
               <span className="text-[#1A1A1A] font-semibold">{activeSystem.technicalSpecs.dataResidency}</span>
             </div>
             <div>
-              <span className="text-[#70706B] text-[10px] block uppercase">Guardrail Boundary</span>
+              <span className="text-[#70706B] text-[10px] block uppercase">{t('ai.guardrail')}</span>
               <span className="text-[#1A1A1A] font-semibold">{activeSystem.technicalSpecs.guardrailType}</span>
             </div>
           </div>
@@ -112,7 +114,7 @@ export const AiSystemsSection: React.FC = () => {
         <div className="space-y-4">
           <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1A1A1A] flex items-center gap-2">
             <GitBranch className="w-4 h-4 text-[#1A1A1A]" />
-            <span>Operational Pipeline Sequence</span>
+            <span>{t('ai.pipeline')}</span>
           </h4>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -123,14 +125,14 @@ export const AiSystemsSection: React.FC = () => {
               >
                 <div className="flex items-center justify-between text-xs font-mono">
                   <span className="text-[#1A1A1A] font-bold">STAGE 0{step.step}</span>
-                  <span className="text-[10px] text-emerald-700 font-semibold uppercase">Verified</span>
+                  <span className="text-[10px] text-emerald-700 font-semibold uppercase">{t('ai.verified')}</span>
                 </div>
                 <h5 className="text-sm font-semibold text-[#1A1A1A]">{step.title}</h5>
                 <p className="text-xs text-[#4A4A45] leading-relaxed">
                   {step.description}
                 </p>
                 <div className="pt-2 border-t border-[#D1D1CD] font-mono text-[10px] text-[#70706B]">
-                  Tech: <span className="text-[#1A1A1A] font-semibold">{step.technology}</span>
+                  {t('ai.tech')} <span className="text-[#1A1A1A] font-semibold">{step.technology}</span>
                 </div>
               </div>
             ))}
@@ -140,7 +142,7 @@ export const AiSystemsSection: React.FC = () => {
         {/* Key Capabilities */}
         <div className="space-y-3 pt-2">
           <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[#1A1A1A]">
-            Enterprise Hardening Capabilities
+            {t('ai.hardening')}
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {activeSystem.keyCapabilities.map((cap, idx) => (

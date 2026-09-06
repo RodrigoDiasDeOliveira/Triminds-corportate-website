@@ -1,14 +1,15 @@
 import React from 'react';
-import { Shield, GitBranch, Cpu, Terminal, FileText, ArrowUpRight, Mail } from 'lucide-react';
+import { Terminal, ArrowUpRight, Mail, Award, CheckCircle2 } from 'lucide-react';
 import { NavigationTab } from '../types';
 import { useLanguage } from '../i18n/LanguageContext';
 
 interface FooterProps {
   onNavigate: (tab: NavigationTab) => void;
   onOpenVocabulary: () => void;
+  onOpenGates?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, onOpenGates }) => {
   const { t } = useLanguage();
 
   return (
@@ -17,21 +18,27 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary }) 
       <div className="border-b border-[#D1D1CD] bg-[#F4F4F1] py-3.5 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono">
           <div className="flex items-center gap-3">
-            <span className="text-[#70706B] font-bold uppercase tracking-wider">Transversal Tenets:</span>
-            <span className="text-[#1A1A1A] font-semibold">Problem First</span>
+            <span className="text-[#70706B] font-bold uppercase tracking-wider">{t('footer.tenetsTitle')}</span>
+            <span className="text-[#1A1A1A] font-semibold">{t('footer.tenet1')}</span>
             <span className="text-[#A0A09B]">→</span>
-            <span className="text-[#1A1A1A] font-semibold">Trust Through Engineering</span>
+            <span className="text-[#1A1A1A] font-semibold">{t('footer.tenet2')}</span>
             <span className="text-[#A0A09B]">→</span>
-            <span className="text-[#1A1A1A] font-semibold">Evidence Over Claims</span>
+            <span className="text-[#1A1A1A] font-semibold">{t('footer.tenet3')}</span>
             <span className="text-[#A0A09B]">→</span>
-            <span className="text-emerald-700 font-bold">Production</span>
+            <span className="text-emerald-700 font-bold">{t('footer.tenet4')}</span>
           </div>
           <div className="flex items-center gap-4 text-[#70706B] text-[11px]">
-            <span>SOVEREIGN CLOUD: EU-WEST-3</span>
+            <span>{t('footer.sovereignCloud')}</span>
             <span>•</span>
-            <span>GDPR ART. 28/32 COMPLIANT</span>
+            <span>{t('footer.gdprNotice')}</span>
             <span>•</span>
-            <span className="text-[#1A1A1A] font-semibold">EVIDENCE-BASED AUDIT V1.0</span>
+            <button 
+              onClick={onOpenGates}
+              className="text-emerald-800 font-bold hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              <Award className="w-3 h-3 text-emerald-600" />
+              <span>{t('footer.gatesCount')}</span>
+            </button>
           </div>
         </div>
       </div>
@@ -45,7 +52,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary }) 
                 T
               </div>
               <span className="font-mono text-base font-bold tracking-wider text-[#1A1A1A]">TRIMINDS</span>
-              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#1A1A1A] text-white">V1.0</span>
+              <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#1A1A1A] text-white">V1.0-AUDITED</span>
             </div>
             
             <p className="text-xs text-[#4A4A45] leading-relaxed max-w-md">
@@ -55,18 +62,18 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary }) 
             <div className="p-3.5 rounded-lg bg-white border border-[#D1D1CD] text-[11px] font-mono text-[#4A4A45] space-y-1 shadow-xs">
               <div className="text-[#1A1A1A] font-bold flex items-center gap-1.5">
                 <Terminal className="w-3.5 h-3.5" />
-                <span>Foundational Distinction</span>
+                <span>{t('footer.foundationalDistinction')}</span>
               </div>
               <p className="text-[#1A1A1A]">
-                <strong>Rodrigo</strong> — Founder, Systems Architect & Lead Researcher
+                <strong>{t('footer.systemsArchLeadership')}</strong> — {t('footer.systemsArchLeadershipDesc')}
               </p>
               <p className="text-[#70706B]">
-                <strong>Triminds</strong> — Sovereign Corporate Engineering Platform Infrastructure
+                <strong>{t('footer.trimindsEntity')}</strong> — {t('footer.trimindsEntityDesc')}
               </p>
               <div className="pt-1 flex items-center gap-1.5 text-emerald-800">
                 <Mail className="w-3 h-3" />
-                <a href="mailto:rodrigo.digau@gmail.com" className="hover:underline font-bold">
-                  rodrigo.digau@gmail.com
+                <a href="mailto:contato@trimindslabs.com" className="hover:underline font-bold">
+                  contato@trimindslabs.com
                 </a>
               </div>
             </div>
@@ -75,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary }) 
           {/* AI Systems Column */}
           <div className="space-y-3">
             <h4 className="text-xs font-mono font-bold tracking-wider uppercase text-[#1A1A1A]">
-              Core Systems
+              {t('footer.colSystems')}
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
@@ -91,7 +98,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary }) 
                   onClick={() => onNavigate('ai-systems')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  Bounded Agentic Loop
+                  Deterministic Agentic Workflow
                 </button>
               </li>
               <li>
@@ -107,82 +114,92 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary }) 
                   onClick={() => onNavigate('ai-systems')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  Zero-Trust Security Gateway
+                  Zero-Trust LLM Gateway
                 </button>
               </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate('projects')} 
+                  className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
+                >
+                  Triminds ObjectScanner V2
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate('projects')} 
+                  className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
+                >
+                  Triminds VectorAI (VS Code)
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Repository Truth & Projects */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-mono font-bold tracking-wider uppercase text-[#1A1A1A]">
+              {t('footer.colTruth')}
+            </h4>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <button 
+                  onClick={() => onNavigate('projects')} 
+                  className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer font-medium"
+                >
+                  {t('projects.categoryBuilt')} (5)
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate('projects')} 
+                  className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
+                >
+                  {t('projects.categoryExploring')}
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate('projects')} 
+                  className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
+                >
+                  {t('projects.categoryPlanned')}
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => onNavigate('about')} 
+                  className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer text-emerald-800 font-semibold"
+                >
+                  {t('audit.title')} (15)
+                </button>
+              </li>
+              {onOpenGates && (
+                <li>
+                  <button 
+                    onClick={onOpenGates} 
+                    className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer font-bold text-emerald-700 flex items-center gap-1"
+                  >
+                    <CheckCircle2 className="w-3 h-3" />
+                    <span>{t('gates.titleHighlight')}</span>
+                  </button>
+                </li>
+              )}
+            </ul>
+          </div>
+
+          {/* Engineering, Standards & Legal */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-mono font-bold tracking-wider uppercase text-[#1A1A1A]">
+              {t('footer.colVerification')}
+            </h4>
+            <ul className="space-y-2 text-xs">
               <li>
                 <button 
                   onClick={() => onNavigate('engineering')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  Observability Gateway
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Case Studies Column */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-mono font-bold tracking-wider uppercase text-[#1A1A1A]">
-              Case Studies
-            </h4>
-            <ul className="space-y-2 text-xs">
-              <li>
-                <button 
-                  onClick={() => onNavigate('projects')} 
-                  className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
-                >
-                  Trusted Compliance Agent
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onNavigate('projects')} 
-                  className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
-                >
-                  Triminds Geo AI
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onNavigate('projects')} 
-                  className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
-                >
-                  Triminds Logistics Platform
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onNavigate('projects')} 
-                  className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
-                >
-                  Triminds Security Layer
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onNavigate('projects')} 
-                  className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
-                >
-                  SmartImageLab Engine
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Knowledge & Reality Audit Column */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-mono font-bold tracking-wider uppercase text-[#1A1A1A]">
-              Audit & Knowledge
-            </h4>
-            <ul className="space-y-2 text-xs">
-              <li>
-                <button 
-                  onClick={() => onNavigate('about')} 
-                  className="hover:text-[#1A1A1A] transition-colors text-left font-bold text-emerald-800 cursor-pointer flex items-center gap-1"
-                >
-                  <span>Reality Check Audit Matrix</span>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                  {t('footer.blueprints')}
                 </button>
               </li>
               <li>
@@ -190,49 +207,55 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary }) 
                   onClick={() => onNavigate('research')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  From RAG to Trusted Retrieval
+                  {t('footer.researchPapers')}
                 </button>
               </li>
               <li>
                 <button 
                   onClick={onOpenVocabulary} 
-                  className="hover:text-[#1A1A1A] transition-colors text-left text-[#1A1A1A] font-medium cursor-pointer"
-                >
-                  Triminds Technical Glossary
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => onNavigate('about')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  Corporate Identity Spec V1.0
+                  {t('footer.canonicalVocab')}
                 </button>
               </li>
               <li>
-                <button 
-                  onClick={() => onNavigate('contact')} 
-                  className="hover:text-[#1A1A1A] transition-colors text-left text-[#1A1A1A] cursor-pointer font-medium"
+                <a 
+                  href="https://github.com/RodrigoDiasDeOliveira" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-[#1A1A1A] transition-colors inline-flex items-center gap-1"
                 >
-                  Request Technical Audit
-                </button>
+                  <span>{t('footer.githubRepos')}</span>
+                  <ArrowUpRight className="w-3 h-3" />
+                </a>
+              </li>
+              <li>
+                <span className="text-[11px] font-mono text-[#70706B] block pt-1">
+                  {t('footer.euAiAct')}
+                </span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Legal & Direct Contact */}
-        <div className="mt-12 pt-6 border-t border-[#D1D1CD] flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] font-mono text-[#70706B]">
-          <p>© {new Date().getFullYear()} TRIMINDS SYSTEMS ENGINEERING. All rights reserved.</p>
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-            <span>{t('footer.jurisdiction')}</span>
+        {/* Bottom Bar with Copyright, Direct Contact & Verification */}
+        <div className="mt-12 pt-8 border-t border-[#D1D1CD] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#70706B]">
+          <div className="flex items-center gap-2">
+            <span>© {new Date().getFullYear()} TRIMINDS. {t('footer.allRights')}</span>
             <span>•</span>
-            <span>Direct: <a href="mailto:rodrigo.digau@gmail.com" className="text-[#1A1A1A] font-bold hover:underline">rodrigo.digau@gmail.com</a></span>
-            <span>•</span>
+            <span>{t('footer.directInquiries')}</span>
+            <a href="mailto:contato@trimindslabs.com" className="text-[#1A1A1A] font-bold hover:underline">
+              contato@trimindslabs.com
+            </a>
+          </div>
+
+          <div className="flex items-center gap-4">
             <span className="text-emerald-700 font-semibold flex items-center gap-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
-              All Claims Audited
+              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+              {t('footer.allAuditsVerified')}
             </span>
+            <span>•</span>
+            <span>{t('footer.jurisdiction')}</span>
           </div>
         </div>
       </div>

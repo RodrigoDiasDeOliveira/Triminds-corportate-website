@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { BookOpen, ArrowRight, X, FileText, CheckCircle2, Copy, Check, Terminal } from 'lucide-react';
+import { BookOpen, ArrowRight, X, FileText, CheckCircle2, Copy, Check } from 'lucide-react';
 import { RESEARCH_ARTICLES } from '../data/researchData';
 import { ResearchArticle } from '../types';
+import { useLanguage } from '../i18n/LanguageContext';
 
 export const ResearchSection: React.FC = () => {
+  const { t } = useLanguage();
   const [selectedArticle, setSelectedArticle] = useState<ResearchArticle | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -19,13 +21,13 @@ export const ResearchSection: React.FC = () => {
       <div className="space-y-3 max-w-3xl">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#EAEAE6] border border-[#D1D1CD] text-[#1A1A1A] text-xs font-mono">
           <BookOpen className="w-3.5 h-3.5" />
-          <span>PHASE 6 // RESEARCH & TECHNICAL KNOWLEDGE BASE</span>
+          <span>{t('res.badge')}</span>
         </div>
         <h2 className="text-2xl sm:text-4xl font-light text-[#1A1A1A] tracking-tight">
-          Engineering Insights & <span className="font-serif italic font-normal">Systems Research</span>
+          {t('res.title')} <span className="font-serif italic font-normal">{t('res.titleHighlight')}</span>
         </h2>
         <p className="text-sm sm:text-base text-[#4A4A45] leading-relaxed">
-          Triminds acts as an open research and engineering authority, publishing empirical findings on vector retrieval limitations, deterministic search primitives, and AI telemetry standards.
+          {t('res.subtitle')}
         </p>
       </div>
 
@@ -55,7 +57,7 @@ export const ResearchSection: React.FC = () => {
               {/* Key Takeaways */}
               <div className="space-y-1.5 pt-2 border-t border-[#F0F0EE]">
                 <span className="text-[10px] font-mono uppercase text-[#70706B] font-bold block">
-                  Core Findings:
+                  {t('res.coreFindings')}
                 </span>
                 {article.keyTakeaways.slice(0, 2).map((takeaway, idx) => (
                   <div key={idx} className="flex items-start gap-2 text-xs text-[#4A4A45]">
@@ -70,7 +72,7 @@ export const ResearchSection: React.FC = () => {
               onClick={() => setSelectedArticle(article)}
               className="w-full py-2.5 rounded-lg text-xs font-mono font-medium text-[#1A1A1A] bg-[#F4F4F1] hover:bg-[#EAEAE6] border border-[#D1D1CD] transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Read Full Whitepaper</span>
+              <span>{t('res.readWhitepaper')}</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#1A1A1A]" />
             </button>
           </div>
@@ -85,7 +87,7 @@ export const ResearchSection: React.FC = () => {
             <div className="flex items-center justify-between px-6 py-4 border-b border-[#D1D1CD] bg-white">
               <div className="flex items-center gap-2 text-xs font-mono text-[#70706B]">
                 <FileText className="w-4 h-4 text-[#1A1A1A]" />
-                <span>TRIMINDS TECHNICAL PUBLICATION // {selectedArticle.category}</span>
+                <span>{t('res.pubHeader')} {selectedArticle.category}</span>
               </div>
               <button
                 onClick={() => setSelectedArticle(null)}
@@ -153,7 +155,7 @@ export const ResearchSection: React.FC = () => {
               {/* Conclusions & Citation */}
               <div className="p-4 rounded-lg bg-white border border-[#D1D1CD] space-y-3 mt-6 shadow-xs">
                 <div>
-                  <h4 className="font-mono text-[#1A1A1A] text-xs font-bold uppercase">Citation & Reference</h4>
+                  <h4 className="font-mono text-[#1A1A1A] text-xs font-bold uppercase">{t('res.copyCitation')}</h4>
                   <p className="text-[11px] font-mono text-[#70706B] mt-0.5">{selectedArticle.doiOrReference}</p>
                 </div>
                 <button
@@ -161,7 +163,7 @@ export const ResearchSection: React.FC = () => {
                   className="px-3 py-1.5 rounded bg-[#F4F4F1] hover:bg-[#EAEAE6] border border-[#D1D1CD] text-[11px] font-mono text-[#1A1A1A] flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
                   {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{copied ? 'Citation Copied to Clipboard' : 'Copy Reference Tag'}</span>
+                  <span>{copied ? t('res.copied') : t('res.copyCitation')}</span>
                 </button>
               </div>
             </div>
@@ -172,7 +174,7 @@ export const ResearchSection: React.FC = () => {
                 onClick={() => setSelectedArticle(null)}
                 className="px-4 py-1.5 rounded bg-[#1A1A1A] hover:bg-black text-white text-xs transition-colors cursor-pointer font-semibold"
               >
-                Close Publication
+                {t('res.close')}
               </button>
             </div>
           </div>

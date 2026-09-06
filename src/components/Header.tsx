@@ -13,7 +13,8 @@ import {
   ShieldCheck,
   Code2,
   Globe,
-  CheckCircle2
+  CheckCircle2,
+  Award
 } from 'lucide-react';
 import { NavigationTab, Language } from '../types';
 import { useLanguage } from '../i18n/LanguageContext';
@@ -23,13 +24,15 @@ interface HeaderProps {
   onNavigate: (tab: NavigationTab) => void;
   onOpenTelemetry: () => void;
   onOpenVocabulary: () => void;
+  onOpenGates: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   currentTab,
   onNavigate,
   onOpenTelemetry,
-  onOpenVocabulary
+  onOpenVocabulary,
+  onOpenGates
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
@@ -68,16 +71,16 @@ export const Header: React.FC<HeaderProps> = ({
             {t('ticker.systemsNominal')}
           </span>
           <span className="text-[#D1D1CD]">|</span>
-          <span>{t('ticker.p99Latency')}: <strong className="text-[#1A1A1A] font-semibold">142ms</strong></span>
+          <span>{t('ticker.p99Latency')}: <strong className="text-[#1A1A1A] font-semibold">&lt; 145ms</strong></span>
           <span className="text-[#D1D1CD]">|</span>
-          <span>{t('ticker.guardrail')}: <strong className="text-[#1A1A1A] font-semibold">0.00% LEAKAGE</strong></span>
+          <span>{t('ticker.guardrail')}: <strong className="text-[#1A1A1A] font-semibold">{t('nav.zeroHallucination')}</strong></span>
           <span className="text-[#D1D1CD]">|</span>
-          <span>{t('ticker.dataResidency')}: <strong className="text-[#1A1A1A] font-semibold">EU SOVEREIGN</strong></span>
+          <span>{t('ticker.dataResidency')}: <strong className="text-[#1A1A1A] font-semibold">{t('nav.euSovereign')}</strong></span>
         </div>
 
         <div className="flex items-center gap-4">
           {/* Language Switcher in top bar */}
-          <div className="flex items-center gap-1 bg-white border border-[#D1D1CD] px-1.5 py-0.5 rounded text-[10px]">
+          <div className="flex items-center gap-1 bg-white border border-[#D1D1CD] px-1.5 py-0.5 rounded text-[10px]" role="group" aria-label="Language selector">
             <Globe className="w-3 h-3 text-[#70706B] mr-0.5" />
             {languages.map((lang, idx) => (
               <React.Fragment key={lang.code}>
@@ -89,6 +92,7 @@ export const Header: React.FC<HeaderProps> = ({
                       ? 'bg-[#1A1A1A] text-white'
                       : 'text-[#70706B] hover:text-[#1A1A1A]'
                   }`}
+                  aria-pressed={language === lang.code}
                   title={`Switch language to ${lang.label}`}
                 >
                   {lang.label}
@@ -99,121 +103,150 @@ export const Header: React.FC<HeaderProps> = ({
 
           <span className="text-[#D1D1CD]">•</span>
 
-          <button 
-            onClick={onOpenVocabulary}
-            className="flex items-center gap-1.5 text-[#70706B] hover:text-[#1A1A1A] transition-colors cursor-pointer"
+          {/* Production Gates Quick Button */}
+          <button
+            onClick={onOpenGates}
+            className="flex items-center gap-1.5 text-emerald-800 hover:text-emerald-950 transition-colors cursor-pointer bg-emerald-50 px-2 py-0.5 rounded border border-emerald-300 font-bold"
+            title="Inspect Phase 12 Production Release Gates"
           >
-            <Code2 className="w-3.5 h-3.5 text-[#1A1A1A]" />
-            <span>{t('nav.vocabularyBtn')}</span>
+            <Award className="w-3 h-3 text-emerald-600" />
+            <span>{t('nav.gatesBtn')}</span>
           </button>
-          
+
           <span className="text-[#D1D1CD]">•</span>
-          
-          <button 
+
+          <button
             onClick={onOpenTelemetry}
-            className="flex items-center gap-1.5 text-[#70706B] hover:text-[#1A1A1A] transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-[#1A1A1A] hover:text-black transition-colors cursor-pointer"
           >
-            <Activity className="w-3.5 h-3.5 text-emerald-600" />
+            <Activity className="w-3 h-3 text-emerald-600" />
             <span>{t('nav.telemetryBtn')}</span>
           </button>
+
+          <span className="text-[#D1D1CD]">•</span>
+
+          <button
+            onClick={onOpenVocabulary}
+            className="text-[#70706B] hover:text-[#1A1A1A] transition-colors cursor-pointer"
+          >
+            {t('nav.vocabularyBtn')}
+          </button>
         </div>
       </div>
 
-      {/* Main Corporate Header */}
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 h-20 flex items-center justify-between">
-        {/* Brand Logo */}
-        <div 
-          onClick={() => handleNavClick('home')}
-          className="flex items-baseline space-x-2 cursor-pointer group select-none"
-        >
-          <span className="text-2xl font-bold tracking-tighter text-[#1A1A1A]">TRIMINDS</span>
-          <span className="text-[10px] font-bold px-1.5 py-0.5 bg-[#1A1A1A] text-white rounded">CORP</span>
-          <span className="hidden sm:inline-block text-[11px] font-mono text-[#70706B] ml-2 tracking-tight">
-            ENGINEERING & SYSTEMS
-          </span>
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-5 lg:space-x-7 text-[11px] font-semibold uppercase tracking-wider">
-          {navItems.map((item) => {
-            const isActive = currentTab === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => handleNavClick(item.id)}
-                className={`py-1 transition-all flex items-center gap-1 cursor-pointer ${
-                  isActive
-                    ? 'text-[#1A1A1A] border-b-2 border-[#1A1A1A]'
-                    : 'text-[#70706B] hover:text-[#1A1A1A] border-b-2 border-transparent'
-                }`}
-              >
-                <span>{t(item.labelKey)}</span>
-              </button>
-            );
-          })}
-        </nav>
-
-        {/* Action Button & Language & Status */}
-        <div className="hidden lg:flex items-center gap-3">
-          <button
-            onClick={() => handleNavClick('contact')}
-            className="px-4 py-2 rounded bg-[#1A1A1A] hover:bg-black text-white text-xs font-semibold tracking-tight transition-all flex items-center gap-1.5 cursor-pointer active:scale-95 shadow-xs"
-          >
-            <ShieldCheck className="w-3.5 h-3.5 text-white/80" />
-            <span>{t('nav.auditBtn')}</span>
-          </button>
-        </div>
-
-        {/* Mobile Actions: Language & Hamburger Button */}
-        <div className="flex md:hidden items-center gap-2">
-          {/* Mobile Language Switcher */}
-          <div className="flex items-center gap-0.5 bg-white border border-[#D1D1CD] px-1.5 py-1 rounded text-[10px] font-mono font-bold">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => setLanguage(lang.code)}
-                className={`px-1 py-0.5 rounded transition-colors ${
-                  language === lang.code ? 'bg-[#1A1A1A] text-white' : 'text-[#70706B]'
-                }`}
-              >
-                {lang.label}
-              </button>
-            ))}
+      {/* Main Navigation Bar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo & Brand Identity */}
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => onNavigate('home')}>
+            <div className="w-8 h-8 rounded-lg bg-[#1A1A1A] flex items-center justify-center text-white font-mono text-sm font-bold shadow-xs">
+              Δ
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-lg tracking-tight text-[#1A1A1A] font-sans">
+                  TRIMINDS
+                </span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#EAEAE6] text-[#70706B] border border-[#D1D1CD]">
+                  ENTERPRISE
+                </span>
+              </div>
+              <p className="text-[10px] text-[#70706B] font-mono hidden sm:block">
+                {t('nav.brandTagline')}
+              </p>
+            </div>
           </div>
 
-          <button
-            onClick={onOpenTelemetry}
-            className="p-2 text-[#70706B] hover:text-[#1A1A1A]"
-            title="Telemetry"
-          >
-            <Activity className="w-5 h-5" />
-          </button>
-          
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-[#1A1A1A] focus:outline-none cursor-pointer"
-            aria-label="Toggle Navigation"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-b border-[#D1D1CD] bg-[#F4F4F1] px-6 pt-3 pb-6 space-y-3">
-          <div className="grid grid-cols-1 gap-1">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
             {navItems.map((item) => {
               const isActive = currentTab === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`w-full text-left px-3 py-2.5 rounded text-xs font-semibold uppercase tracking-wider flex items-center gap-2.5 ${
+                  className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-mono transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-[#1A1A1A] text-white'
+                      ? 'bg-[#1A1A1A] text-white font-semibold shadow-xs'
                       : 'text-[#70706B] hover:text-[#1A1A1A] hover:bg-[#EAEAE6]'
                   }`}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {item.icon}
+                  <span>{t(item.labelKey)}</span>
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Right Header CTAs */}
+          <div className="hidden sm:flex items-center gap-2.5">
+            <button
+              onClick={() => onNavigate('about')}
+              className="px-3 py-1.5 rounded-md border border-[#D1D1CD] bg-white text-xs font-mono text-[#1A1A1A] hover:bg-[#F4F4F1] transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <span>{t('nav.auditMatrixBtn')}</span>
+            </button>
+
+            <button
+              onClick={() => onNavigate('contact')}
+              className="px-3.5 py-1.5 rounded-md bg-[#1A1A1A] text-white text-xs font-mono font-medium hover:bg-black transition-all flex items-center gap-1.5 shadow-xs cursor-pointer"
+            >
+              <Mail className="w-3.5 h-3.5" />
+              <span>{t('nav.contact')}</span>
+            </button>
+          </div>
+
+          {/* Mobile Menu Trigger */}
+          <div className="flex lg:hidden items-center gap-2">
+            {/* Language Switcher on mobile */}
+            <div className="flex items-center bg-white border border-[#D1D1CD] px-1.5 py-0.5 rounded text-[11px] font-mono">
+              {languages.map((lang, idx) => (
+                <React.Fragment key={lang.code}>
+                  {idx > 0 && <span className="text-[#D1D1CD] mx-0.5">|</span>}
+                  <button
+                    onClick={() => setLanguage(lang.code)}
+                    className={`px-1 py-0.5 rounded font-bold ${
+                      language === lang.code
+                        ? 'bg-[#1A1A1A] text-white'
+                        : 'text-[#70706B]'
+                    }`}
+                  >
+                    {lang.label}
+                  </button>
+                </React.Fragment>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-lg text-[#1A1A1A] hover:bg-[#EAEAE6] transition-colors"
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open navigation menu'}
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Drawer Menu */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden border-t border-[#D1D1CD] bg-[#F4F4F1] p-4 space-y-3 animate-in slide-in-from-top-2 duration-150">
+          <div className="space-y-1">
+            {navItems.map((item) => {
+              const isActive = currentTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-mono transition-colors text-left cursor-pointer ${
+                    isActive
+                      ? 'bg-[#1A1A1A] text-white font-bold'
+                      : 'text-[#4A4A45] hover:bg-[#EAEAE6]'
+                  }`}
+                  aria-current={isActive ? 'page' : undefined}
                 >
                   {item.icon}
                   <span>{t(item.labelKey)}</span>
@@ -222,32 +255,46 @@ export const Header: React.FC<HeaderProps> = ({
             })}
           </div>
 
-          <div className="pt-3 border-t border-[#D1D1CD] flex flex-col gap-2">
+          <div className="pt-3 border-t border-[#D1D1CD] space-y-2">
             <button
               onClick={() => {
-                onOpenVocabulary();
+                onOpenGates();
                 setMobileMenuOpen(false);
               }}
-              className="w-full text-left px-3 py-2 rounded text-xs font-mono text-[#1A1A1A] bg-white border border-[#D1D1CD] flex items-center gap-2"
+              className="w-full flex items-center justify-center gap-2 p-2.5 rounded-lg border border-emerald-300 bg-emerald-50 text-xs font-mono font-bold text-emerald-800"
             >
-              <Code2 className="w-4 h-4 text-[#1A1A1A]" />
-              <span>{t('nav.vocabularyBtn')}</span>
+              <Award className="w-4 h-4 text-emerald-600" />
+              <span>{t('nav.gatesBtn')} {t('nav.gatesVerified')}</span>
             </button>
+
             <button
               onClick={() => {
                 onOpenTelemetry();
                 setMobileMenuOpen(false);
               }}
-              className="w-full text-left px-3 py-2 rounded text-xs font-mono text-[#1A1A1A] bg-white border border-[#D1D1CD] flex items-center gap-2"
+              className="w-full flex items-center justify-center gap-2 p-2.5 rounded-lg border border-[#D1D1CD] bg-white text-xs font-mono text-[#1A1A1A]"
             >
               <Activity className="w-4 h-4 text-emerald-600" />
               <span>{t('nav.telemetryBtn')}</span>
             </button>
+
+            <button
+              onClick={() => {
+                onOpenVocabulary();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full flex items-center justify-center gap-2 p-2.5 rounded-lg border border-[#D1D1CD] bg-white text-xs font-mono text-[#70706B]"
+            >
+              <Code2 className="w-4 h-4" />
+              <span>{t('nav.vocabularyBtn')}</span>
+            </button>
+
             <button
               onClick={() => handleNavClick('contact')}
-              className="w-full py-2.5 rounded text-xs font-semibold text-center bg-[#1A1A1A] text-white mt-1 uppercase tracking-wider cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 p-3 rounded-lg bg-[#1A1A1A] text-white text-xs font-mono font-semibold"
             >
-              {t('nav.auditBtn')}
+              <Mail className="w-4 h-4" />
+              <span>{t('nav.contact')}</span>
             </button>
           </div>
         </div>

@@ -17,7 +17,7 @@ export const ContactSection: React.FC = () => {
   });
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText('rodrigo.digau@gmail.com');
+    navigator.clipboard.writeText('contato@trimindslabs.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
@@ -37,7 +37,7 @@ ${formData.message || 'Please assess our architecture requirements.'}
 ---
 Transmitted via Triminds Corporate Gateway (DOC-TRIMINDS-POSITIONING-V1.0)`
     );
-    return `mailto:rodrigo.digau@gmail.com?subject=${subject}&body=${body}`;
+    return `mailto:contato@trimindslabs.com?subject=${subject}&body=${body}`;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -79,14 +79,14 @@ Transmitted via Triminds Corporate Gateway (DOC-TRIMINDS-POSITIONING-V1.0)`
                     {t('contact.directChannel')}
                   </span>
                   <div className="text-base font-bold text-[#1A1A1A] mt-0.5">
-                    Rodrigo Digau
+                    Triminds Architecture Core
                   </div>
                   <span className="text-xs text-[#70706B]">
                     {t('contact.primaryRole')}
                   </span>
                 </div>
-                <div className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white flex items-center justify-center font-serif text-lg">
-                  R
+                <div className="w-10 h-10 rounded-full bg-[#1A1A1A] text-white flex items-center justify-center font-serif text-lg font-bold">
+                  T
                 </div>
               </div>
 
@@ -97,10 +97,10 @@ Transmitted via Triminds Corporate Gateway (DOC-TRIMINDS-POSITIONING-V1.0)`
                 </span>
                 <div className="flex items-center justify-between gap-2">
                   <a
-                    href="mailto:rodrigo.digau@gmail.com"
+                    href="mailto:contato@trimindslabs.com"
                     className="text-sm font-mono font-bold text-[#1A1A1A] hover:underline flex items-center gap-1.5 truncate"
                   >
-                    <span>rodrigo.digau@gmail.com</span>
+                    <span>contato@trimindslabs.com</span>
                     <ExternalLink className="w-3.5 h-3.5 shrink-0 text-[#70706B]" />
                   </a>
                   <button
@@ -120,7 +120,7 @@ Transmitted via Triminds Corporate Gateway (DOC-TRIMINDS-POSITIONING-V1.0)`
 
               {/* Direct Mail Action Button */}
               <a
-                href="mailto:rodrigo.digau@gmail.com?subject=[Triminds%20Architecture%20Inquiry]&body=Hello%20Rodrigo,%0A%0AWe%20would%20like%20to%20schedule%20an%20architecture%20review%20with%20Triminds.%0A%0AOrganization:%0AScope:"
+                href="mailto:contato@trimindslabs.com?subject=[Triminds%20Architecture%20Inquiry]&body=Hello%20Triminds%20Team,%0A%0AWe%20would%20like%20to%20schedule%20an%20architecture%20review.%0A%0AOrganization:%0AScope:"
                 className="w-full py-2.5 px-4 rounded border border-[#1A1A1A] bg-white hover:bg-[#1A1A1A] hover:text-white text-[#1A1A1A] text-xs font-mono font-semibold transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Mail className="w-3.5 h-3.5" />
@@ -241,11 +241,11 @@ Transmitted via Triminds Corporate Gateway (DOC-TRIMINDS-POSITIONING-V1.0)`
                       onChange={(e) => setFormData({ ...formData, domain: e.target.value })}
                       className="w-full px-3.5 py-2.5 bg-[#F4F4F1] border border-[#D1D1CD] rounded text-[#1A1A1A] focus:outline-none focus:border-[#1A1A1A] font-sans text-xs"
                     >
-                      <option>Architecture Audit & Verification</option>
-                      <option>Trusted Search Core Deployment</option>
-                      <option>Bounded Agentic Automation</option>
-                      <option>Geospatial AI & Satellite Analytics</option>
-                      <option>Zero-Trust Security & Observability Gateway</option>
+                      <option value="Architecture Audit & Verification">{t('contact.scopeOption1')}</option>
+                      <option value="Trusted Search Core Deployment">{t('contact.scopeOption2')}</option>
+                      <option value="Deterministic/Controlled Agentic Workflows">{t('contact.scopeOption3')}</option>
+                      <option value="Geospatial AI & Satellite Analytics">{t('contact.scopeOption4')}</option>
+                      <option value="Zero-Trust Security & Observability Gateway">{t('contact.scopeOption5')}</option>
                     </select>
                   </div>
                 </div>

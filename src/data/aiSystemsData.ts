@@ -47,45 +47,45 @@ export const AI_SYSTEMS: AISystem[] = [
   },
   {
     id: "agentic-systems",
-    name: "Bounded Agentic Framework",
-    headline: "Autonomous State-Machine Agents with Cryptographic Action Fences",
-    description: "Autonomous agents engineered for complex multi-step enterprise workflows. Unlike open-loop prototypes that risk runaway token recursion, Triminds agents execute within deterministic finite state machines, audited API contracts, and human-in-the-loop escalation gates.",
+    name: "Deterministic / Controlled Agentic Workflow",
+    headline: "Controlled Dual-Pass Agentic Verification Pipeline with Character-Offset Provenance",
+    description: "Conceived and implemented within the Trusted Compliance Agent (https://github.com/RodrigoDiasDeOliveira/Trusted-Compliance-Agent). Replaces unpredictable stochastic agent loops with a deterministic, dual-pass verification workflow that enforces exact character-level citation provenance, Pydantic V2 schema contracts, and fail-closed validation gates.",
     keyCapabilities: [
-      "Finite State-Machine (FSM) Execution Bounds",
-      "Strict Schema-Enforced Tool Calling",
-      "Dynamic Token Budget & Max-Step Circuit Breakers",
-      "Cryptographically Signed Audit Trail per Action"
+      "Controlled Dual-Pass Agentic Verification",
+      "Character-Offset Legal Citation Provenance",
+      "Strict Pydantic V2 Schema Validation Gates",
+      "Cryptographic SHA-256 Token Span Hashing"
     ],
     technicalSpecs: {
-      latency: "Step cycle < 420ms (local actions)",
-      reliability: "Zero unconstrained action escape",
-      dataResidency: "Frankfurt (eu-central-1) VPC",
-      guardrailType: "Hard State-Machine & Approval Gate"
+      latency: "Sub-12s 500-page roundtrip analysis",
+      reliability: "Zero-hallucination compliance gate",
+      dataResidency: "Sovereign EU Enclave / Cloud Run",
+      guardrailType: "Fail-closed dual-pass deterministic validator"
     },
     architecturalFlow: [
       {
         step: 1,
-        title: "Goal Ingestion & State Init",
-        description: "Validates initial conditions, user authorization context, and maximum token budget.",
-        technology: "OAuth2 JWT Token Validator"
+        title: "Document Ingestion & Multi-modal Chunking",
+        description: "Ingests complex regulatory directives, generating character-level coordinate bounding boxes and lexical token spans.",
+        technology: "PyPDF & PDFPlumber Extraction Engine"
       },
       {
         step: 2,
-        title: "Bounded Plan Synthesis",
-        description: "Generates explicit JSON action sequence matching allowed tool definitions.",
-        technology: "Pydantic Schema Constrained Generator"
+        title: "Hybrid Retrieval & Neural Reranking",
+        description: "Fuses BM25 sparse lexical search and Qdrant dense vectors via Reciprocal Rank Fusion (k=60), scored by BGE-Reranker-Large.",
+        technology: "Qdrant Vector DB + BM25 + BGE Cross-Encoder"
       },
       {
         step: 3,
-        title: "Deterministic Pre-Flight Checks",
-        description: "Validates parameters against enterprise system-of-record state prior to invocation.",
-        technology: "Triminds Action Guardrail Filter"
+        title: "Controlled Agentic Synthesis",
+        description: "Executes constrained legal reasoning against verified chunks, bounded strictly to retrieved citation spans with zero ungrounded generation.",
+        technology: "Pydantic V2 Schema Contract Gate"
       },
       {
         step: 4,
-        title: "Audited Tool Invocation",
-        description: "Executes target API with cryptographic action signature and structured log emit.",
-        technology: "HMAC Signed Webhook Dispatcher"
+        title: "Deterministic Provenance Verification",
+        description: "Validates extracted legal requirements with cryptographic SHA-256 token hashing; fails closed on any ungrounded claim.",
+        technology: "Cryptographic Provenance Verifier"
       }
     ]
   },
@@ -154,26 +154,26 @@ export const AI_SYSTEMS: AISystem[] = [
       {
         step: 1,
         title: "Inbound Packet Inspection",
-        description: "Scans user payload for encoded injection patterns, hidden delimiters, and PII.",
-        technology: "Rust High-Performance Regex & ONNX"
+        description: "Scans user payload for encoded injection patterns, policy violations, and PII.",
+        technology: "Spring Security & OPA Rego Engine"
       },
       {
         step: 2,
         title: "PII Masking & Tokenization",
-        description: "Replaces credit cards, national IDs, and names with cryptographically keyed tokens.",
+        description: "Replaces sensitive enterprise keys, national IDs, and credentials with cryptographically keyed tokens.",
         technology: "Triminds Sovereign Pseudonymizer"
       },
       {
         step: 3,
         title: "Model Forwarding & Response Guard",
-        description: "Proxies request to internal model; verifies completion for hallucinations and leaks.",
-        technology: "Async Tokio Streaming Engine"
+        description: "Proxies request through Hexagonal domain ports; verifies completion for policy compliance and leaks.",
+        technology: "Reactive HTTP Gateway Engine"
       },
       {
         step: 4,
         title: "Immutable Telemetry Logging",
-        description: "Emits latency, token counts, and cryptographic hash to immutable audit store.",
-        technology: "OpenTelemetry + Cloud Logging"
+        description: "Emits latency, token counts, and cryptographic hash to immutable PostgreSQL audit store.",
+        technology: "OpenTelemetry + PostgreSQL Audit Vault"
       }
     ]
   }

@@ -19,13 +19,13 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVocabulary }) 
       <div className="space-y-3 max-w-3xl">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#EAEAE6] border border-[#D1D1CD] text-[#1A1A1A] text-xs font-mono">
           <Building2 className="w-3.5 h-3.5" />
-          <span>PHASE 0 // CORPORATE IDENTITY & AUDIT SPECIFICATION</span>
+          <span>{t('about.badge')}</span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-light text-[#1A1A1A] tracking-tight">
-          What Triminds <span className="font-serif italic font-normal">Represents</span>
+          {t('about.title')} <span className="font-serif italic font-normal">{t('about.titleHighlight')}</span>
         </h2>
         <p className="text-sm sm:text-base text-[#4A4A45] leading-relaxed">
-          Triminds was established to counteract the superficial rush of speculative AI prototypes with uncompromising systems engineering, deterministic verification, and European data sovereignty. Every claim is validated against real code and architecture audits.
+          {t('about.subtitle')}
         </p>
 
         {/* Sub-navigation tabs */}
@@ -39,7 +39,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVocabulary }) 
             }`}
           >
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>GitHub Reality Check Audit Matrix</span>
+            <span>{t('about.tabMatrix')}</span>
             <span className="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400 text-[10px]">15 AUDITED</span>
           </button>
 
@@ -52,7 +52,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVocabulary }) 
             }`}
           >
             <Building2 className="w-3.5 h-3.5" />
-            <span>Positioning & Principles</span>
+            <span>{t('about.tabPositioning')}</span>
           </button>
         </div>
       </div>
@@ -73,7 +73,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVocabulary }) 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-[#70706B] font-bold">
-                    Corporate Mission (Audited V1.0)
+                    {t('about.missionTitle')}
                   </span>
                   <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-bold">
                     SUSTAINED
@@ -83,14 +83,14 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVocabulary }) 
                   "{corporateData.mission}"
                 </p>
                 <p className="text-[11px] text-[#70706B] font-mono">
-                  Refined to promise strictly what is proved in production code, avoiding speculative inflation.
+                  {t('about.missionNote')}
                 </p>
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-[#70706B] font-bold">
-                    Corporate Vision (Audited V1.0)
+                    {t('about.visionTitle')}
                   </span>
                   <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-rose-100 text-rose-900 font-bold">
                     ASPIRATIONAL HORIZON
@@ -137,7 +137,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVocabulary }) 
             </div>
           </div>
 
-          {/* Organizational Delineation: Rodrigo vs Triminds */}
+          {/* Organizational Delineation: Architecture Leadership vs Platform */}
           <div className="rounded-xl border border-[#D1D1CD] bg-white p-6 lg:p-8 space-y-6 shadow-xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#EAEAE6] pb-4">
               <div>
@@ -145,7 +145,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVocabulary }) 
                   ORGANIZATIONAL DELINEATION
                 </span>
                 <h3 className="text-lg font-bold text-[#1A1A1A] font-mono mt-0.5">
-                  Distinction: Rodrigo & Triminds
+                  Distinction: Systems Architecture Leadership & Triminds Platform
                 </h3>
               </div>
               <span className="text-xs font-mono text-[#70706B]">SPEC-DOC: {corporateData.specificationDocumentId}</span>
@@ -155,10 +155,10 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVocabulary }) 
               <div className="p-5 rounded-lg bg-[#F4F4F1] border border-[#D1D1CD] space-y-2">
                 <div className="flex items-center gap-2 text-[#1A1A1A] font-mono text-xs font-bold uppercase">
                   <Terminal className="w-4 h-4 text-[#1A1A1A]" />
-                  <span>Rodrigo // The Founder & Systems Architect</span>
+                  <span>Systems Architecture Leadership // Foundations & Research</span>
                 </div>
                 <p className="text-xs text-[#4A4A45] leading-relaxed font-sans">
-                  {corporateData.differenceBetweenTrimindsAndRodrigo.rodrigo}
+                  {corporateData.differenceBetweenTrimindsAndArchitectureLeadership.architectureLeadership}
                 </p>
               </div>
 
@@ -168,7 +168,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVocabulary }) 
                   <span>Triminds // Corporate Engineering Platform</span>
                 </div>
                 <p className="text-xs text-[#4A4A45] leading-relaxed font-sans">
-                  {corporateData.differenceBetweenTrimindsAndRodrigo.triminds}
+                  {corporateData.differenceBetweenTrimindsAndArchitectureLeadership.triminds}
                 </p>
               </div>
             </div>
@@ -252,17 +252,17 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVocabulary }) 
         <div>
           <h3 className="text-base font-bold flex items-center gap-2">
             <Code2 className="w-5 h-5 text-white/80" />
-            <span>Triminds Technical Vocabulary Index</span>
+            <span>{t('about.vocabBannerTitle')}</span>
           </h3>
           <p className="text-xs text-[#A0A09B] mt-1 max-w-xl">
-            Explore rigorous mathematical definitions of Trusted Search, Trust Before Generation, Bounded Agency, and AI Observability standardizing our production contracts.
+            {t('about.vocabBannerDesc')}
           </p>
         </div>
         <button
           onClick={onOpenVocabulary}
           className="px-5 py-2.5 rounded bg-white hover:bg-[#F4F4F1] text-[#1A1A1A] text-xs font-mono font-semibold transition-all cursor-pointer shrink-0"
         >
-          Open Canonical Vocabulary
+          {t('about.openVocab')}
         </button>
       </div>
     </section>
