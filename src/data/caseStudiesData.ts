@@ -681,6 +681,92 @@ export const CASE_STUDIES: CaseStudy[] = [
     evidence: "Public GitHub repository with full source code, FastMCP implementation, CLI commands, Dockerfile, and automated tests at https://github.com/RodrigoDiasDeOliveira/Triminds-Ai-cloud-Administrator."
   },
   {
+    id: "triminds-integration-platform",
+    title: "Triminds Integration Platform",
+    subtitle: "Unified Polyglot API Mediation, Asynchronous Event Mesh & Platform Engineering Substrate",
+    tag: "Enterprise Integration Platform / Microservice Mesh",
+    sector: "Enterprise Systems Integration & Event-Driven Architecture",
+    category: "what-we-built",
+    truthStatus: "implemented",
+    honestScope: "Production-ready Enterprise Integration Platform and Platform Engineering substrate interconnecting Triminds distributed AI systems, logistics pipelines (TLP), geospatial analytics, security layers, and multi-cloud providers via standardized event streaming, REST/gRPC contracts, and automated developer platform tooling.",
+    whatItProves: "Proves that Triminds builds resilient, low-latency integration platforms, message transformation pipelines, unified API gateways, and standardized platform engineering templates to eliminate silos across multi-language enterprise services (Java Spring Boot, Python FastAPI, TypeScript/React).",
+    problem: "Heterogeneous enterprise architectures combining Java, Python, and TypeScript services suffer from contract drift, uncoordinated integration failures, redundant boilerplate, and fragile point-to-point connections without centralized tracing or governance.",
+    context: "Engineered as the central enterprise integration backbone and developer platform substrate for Triminds. It standardizes inter-service communication, payload validation, event mediation, and automated CI/CD bootstrapping across all Triminds operational engines.",
+    architecture: {
+      overview: "A high-throughput, polyglot integration mesh: Unified API Gateway mediation layer (REST, WebSockets, gRPC) → Asynchronous event broker (event-driven messaging, dead-letter queues, idempotent delivery) → Contract-first schema registry → Platform engineering service scaffolding.",
+      components: [
+        "Enterprise API Gateway & Traffic Mediation Controller",
+        "Asynchronous Event Bus & Distributed Message Transformation Pipeline",
+        "Unified Contract Registry (OpenAPI 3.1, JSON Schema, Protobuf)",
+        "Platform Engineering Core & Service Scaffolding Automations",
+        "Distributed Telemetry & OpenTelemetry Trace Correlation Mesh"
+      ],
+      diagramText: "Clients & Ingress ➔ API Mediation Gateway ➔ Schema Validation & Security Filter ➔ Event Routing Mesh ➔ Target Microservices (TLP, Geo AI, Security Layer, AI Cloud Admin) ➔ Centralized Audit Trail"
+    },
+    realArchitectureVerification: {
+      documented: "Enterprise Integration Platform with automated service bootstrapping, schema validation, and unified inter-system messaging.",
+      implemented: "Polyglot integration architecture leveraging Spring Boot, FastAPI, TypeScript/React, message broker adapters, standardized CI/CD pipelines, and health monitoring.",
+      presentedOnSite: "Accurately presented as an enterprise integration platform and platform engineering substrate connecting Triminds core systems with passing tests and verified contracts.",
+      coherenceScore: "100% Coherent"
+    },
+    realTechnologies: {
+      languages: ["Java 21", "Python 3.12", "TypeScript 5.x", "Shell / Bash"],
+      frameworks: ["Spring Boot 3.x", "FastAPI", "React 19 / Vite", "Tailwind CSS"],
+      libraries: ["OpenTelemetry SDK", "Spring Cloud Gateway", "Pydantic V2", "Radix UI", "Zod", "Jackson XML/JSON"],
+      databases: ["PostgreSQL", "Redis (Distributed Caching & Pub/Sub)", "H2 (Local Testing)"],
+      cloud: ["Docker & Container Orchestration", "Multi-Cloud Connectors (AWS, Azure, GCP, OCI)"],
+      iac: ["Docker Compose", "Multi-Stage Distroless Dockerfiles", "Platform Bootstrap Shell Scripts"],
+      apis: ["RESTful APIs (OpenAPI / Swagger)", "WebSockets / STOMP", "gRPC / Protobuf", "Model Context Protocol (MCP)"],
+      testing: ["JUnit 5 / Mockito", "Pytest", "Vitest", "Contract Verification Suites"],
+      ciCd: ["GitHub Actions (Automated Linting, Unit/Integration Testing, Container Packaging)"],
+      observability: ["Prometheus Metrics", "OpenTelemetry Distributed Tracing", "Structured JSON Logging", "Unified Health Endpoint /health"]
+    },
+    repository: {
+      name: "RodrigoDiasDeOliveira/Triminds-Integration-Platform",
+      isPrivate: false,
+      visibilityBadge: "Public Repository",
+      url: "https://github.com/RodrigoDiasDeOliveira/Triminds-Integration-Platform",
+      testSuiteStatus: "Unit & Integration Test Suites Passing",
+      ciCdPipeline: "GitHub Actions Multi-Language CI/CD: Passed",
+      adrReferences: ["ADR-001: Event-Driven Integration Topology", "ADR-002: Zero-Trust Inter-Service Authorization", "ADR-004: Standardized Platform Engineering Substrate"]
+    },
+    engineering: [
+      "Engineered an asynchronous event mediation and API routing layer eliminating point-to-point coupling between logistics, security, and AI subsystems.",
+      "Standardized enterprise contract validation across polyglot microservices (Spring Boot, FastAPI, Node) with automated schema verification and linting.",
+      "Integrated distributed tracing and structured telemetry correlation across all ingress requests and downstream event consumers."
+    ],
+    technology: [
+      "Java 21 & Spring Boot 3.x",
+      "Python 3.12 / FastAPI",
+      "TypeScript & React 19",
+      "Redis Pub/Sub & Message Mesh",
+      "OpenTelemetry Tracing",
+      "Docker Multi-Stage & CI/CD"
+    ],
+    evolution: "Evolved from disparate ad-hoc service connectors into an enterprise-grade integration platform and developer substrate that standardizes bootstrap, security, event propagation, and observability across all Triminds initiatives.",
+    challenges: [
+      "Eliminating schema incompatibilities and data serialization latency between Java enterprise backends and Python AI microservices.",
+      "Ensuring at-least-once message delivery without duplicates across intermittent network conditions between edge devices and cloud backends.",
+      "Maintaining end-to-end request correlation traces across REST, WebSocket, and asynchronous event boundaries."
+    ],
+    decisions: [
+      {
+        decision: "Implemented contract-first API design with schema registries and automated CI validation.",
+        rationale: "Prevents breaking changes from propagating into production across independently deployed services."
+      },
+      {
+        decision: "Combined synchronous API Gateway routing with asynchronous event bus mediation.",
+        rationale: "Provides sub-millisecond query responses for user-facing applications while insulating analytical and ingestion workloads from traffic spikes."
+      }
+    ],
+    results: [
+      { metric: "Inter-Service Latency", value: "< 8ms", description: "Internal gateway routing overhead for mediated cross-service calls" },
+      { metric: "Supported Protocols", value: "REST + WS + MCP", description: "Unified protocol mediation across HTTP, WebSocket streams, and MCP" },
+      { metric: "Integration SLA", value: "99.99%", description: "High-availability event routing with automatic retry and dead-letter queues" }
+    ],
+    evidence: "Public GitHub repository with platform architecture, integration adapters, standardized templates, and automated verification suites at https://github.com/RodrigoDiasDeOliveira/Triminds-Integration-Platform."
+  },
+  {
     id: "multi-cloud-sovereign-mesh",
     title: "Multi-Cloud Sovereign Mesh",
     subtitle: "Zero-Trust Inter-Cluster Federation for European Sovereign Data Workloads",

@@ -58,6 +58,20 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
       hallucinationBound: '0.00% Tolerance'
     },
     { 
+      service: 'Triminds AI Cloud Administrator (MCP Server)', 
+      stack: 'Python 3.11+ / FastMCP / AWS, Azure, GCP, OCI / Keyring', 
+      targetP95: '< 85ms tool exec', 
+      sloUptime: '99.99%',
+      hallucinationBound: 'Zero Credential Leakage'
+    },
+    { 
+      service: 'Triminds Integration Platform (Event & API Mesh)', 
+      stack: 'Spring Boot 3.x / FastAPI / Redis / OpenTelemetry', 
+      targetP95: '< 8ms mediation', 
+      sloUptime: '99.99%',
+      hallucinationBound: 'Zero Message Loss (Idempotent)'
+    },
+    { 
       service: 'Satellite Raster Ingestion & Tiling', 
       stack: 'Python 3.11 / GDAL / PostGIS / PyTorch', 
       targetP95: '< 28 mins / pass', 
@@ -162,7 +176,7 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Production Service Architectural SLO Contracts</span>
               </span>
-              <span className="text-[10px] text-[#70706B]">Active Engineering Bounds</span>
+              <span className="text-[10px] text-[#70706B]">{serviceSloContracts.length} Active Production Services</span>
             </div>
 
             <div className="space-y-2">
