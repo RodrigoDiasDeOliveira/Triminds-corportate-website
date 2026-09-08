@@ -595,6 +595,92 @@ export const CASE_STUDIES: CaseStudy[] = [
     evidence: "Public GitHub repository with complete Python codebase, test suite, and CI/CD workflow at https://github.com/RodrigoDiasDeOliveira/Trusted-Compliance-Agent."
   },
   {
+    id: "triminds-ai-cloud-administrator",
+    title: "Triminds AI Cloud Administrator",
+    subtitle: "Model Context Protocol (MCP) Multi-Cloud Agentic Orchestrator for AWS, Azure, GCP & OCI",
+    tag: "Multi-Cloud MCP Server / AI Infrastructure Agent",
+    sector: "Enterprise Multi-Cloud Infrastructure & Autonomous DevOps",
+    category: "what-we-built",
+    truthStatus: "implemented",
+    honestScope: "Production-ready Model Context Protocol (MCP) Server enabling AI agents to manage, provision, and audit infrastructure across AWS, Azure, Google Cloud, and Oracle OCI using natural language with search-and-execute auto-discovery and OS-level keyring security.",
+    whatItProves: "Proves that Triminds builds standardized Model Context Protocol (MCP) server architectures, native tool auto-discovery, and secure multi-cloud resource provisioning (Compute, Storage, Database, Networking, IAM, Serverless, Containers) using FastMCP, Typer CLI, and FastAPI.",
+    problem: "Managing heterogeneous multi-cloud infrastructure across AWS, Azure, GCP, and Oracle OCI forces operations teams to context-switch across incompatible consoles and fragmented CLI tooling. Traditional LLM-based cloud tooling suffers from hallucinations, unbounded tool manifests that overflow prompt context windows, and insecure plaintext credential handling.",
+    context: "Designed as an agent-native control plane adhering to the Model Context Protocol (MCP). The system exposes 9 granular resource categories via natural language while enforcing strict zero-leak credential isolation (keyring encryption) and dynamic tool auto-discovery.",
+    architecture: {
+      overview: "A four-tier agentic infrastructure gateway: FastMCP / Typer CLI / FastAPI entrypoints → Unified Multi-Cloud Provider Abstraction Layer (boto3, azure-mgmt, google-cloud, oci-python-sdk) → Categorized Tool Discovery Mesh (search-and-execute via pkgutil) → Cryptographic Keyring & Zero-Leak Credential Resolver.",
+      components: [
+        "FastMCP Model Context Protocol Server with Dynamic Tool Auto-Discovery",
+        "Search-and-Execute Tool Registry with PEP-420 Modular Subpackages",
+        "Quad-Cloud Provider Adapters (AWS, Azure, Google Cloud, Oracle OCI)",
+        "Keyring Cryptographic Secret Store with Zero-Log Credential Sanitization",
+        "Dual-Mode Protocol Engine: stdio MCP runtime + FastAPI Health/Provider API"
+      ],
+      diagramText: "AI Agent (MCP Host) ➔ FastMCP Server (stdio / SSE) ➔ Search-and-Execute Registry ➔ Cloud Provider Factory (AWS | Azure | GCP | OCI) ➔ Hyperscaler APIs ➔ Structured JSON Telemetry"
+    },
+    realArchitectureVerification: {
+      documented: "Model Context Protocol (MCP) Server with FastMCP, Typer CLI, and multi-cloud providers (AWS, Azure, GCP, OCI).",
+      implemented: "Python 3.11+ modular package (src/ai_multicloud_agent/), FastMCP tool decorators, Typer CLI, FastAPI /health and /tools routes, Docker containerization, and comprehensive Pytest suite.",
+      presentedOnSite: "Accurately presented as a Python/FastMCP Multi-Cloud Agent Server supporting AWS, Azure, GCP, and Oracle OCI with real code and passing tests.",
+      coherenceScore: "100% Coherent"
+    },
+    realTechnologies: {
+      languages: ["Python 3.11", "Python 3.12", "Shell"],
+      frameworks: ["FastMCP (Model Context Protocol)", "FastAPI", "Typer CLI", "Pydantic Settings"],
+      libraries: ["boto3 (AWS SDK)", "azure-mgmt-* (Azure SDK)", "google-cloud-* (GCP SDK)", "oci (Oracle Cloud OCI SDK)", "keyring (OS-level secret storage)", "pkgutil (Dynamic module discovery)"],
+      databases: ["Multi-Cloud Database Adapters: AWS RDS, Azure Cosmos DB, Google Cloud SQL, Oracle Autonomous DB"],
+      cloud: ["Amazon Web Services (AWS)", "Microsoft Azure", "Google Cloud Platform (GCP)", "Oracle Cloud Infrastructure (OCI)"],
+      iac: ["Docker containerization", "Environment configuration profiles (.env / keyring)"],
+      apis: ["Model Context Protocol (JSON-RPC stdio & SSE)", "FastAPI REST API (/health, /health/providers, /tools)"],
+      testing: ["Pytest (Unit test suites & cloud provider mock integration tests)"],
+      ciCd: ["GitHub Actions CI (Python lint, typecheck, pytest runner, Docker build)"],
+      observability: ["Structured JSON Logging", "Zero-leak secret masking", "Provider health checks"]
+    },
+    repository: {
+      name: "RodrigoDiasDeOliveira/Triminds-Ai-cloud-Administrator",
+      isPrivate: false,
+      visibilityBadge: "Public Repository",
+      url: "https://github.com/RodrigoDiasDeOliveira/Triminds-Ai-cloud-Administrator",
+      testSuiteStatus: "Pytest Suite Passing (Unit & Provider Mock Tests)",
+      ciCdPipeline: "GitHub Actions CI / Docker Multi-Stage: Passed",
+      adrReferences: ["ADR-001: Model Context Protocol (FastMCP) Specification", "ADR-003: Zero-Leak Keyring Credential Isolation", "ADR-005: Search-and-Execute Tool Discovery Pattern"]
+    },
+    engineering: [
+      "Implemented native search-and-execute MCP pattern with dynamic pkgutil tool auto-discovery, eliminating bloated prompt context windows.",
+      "Designed zero-leak credential isolation utilizing OS-level keyring and pydantic-settings, ensuring secret keys never leak into agent conversational contexts or telemetry streams.",
+      "Architected quad-cloud abstraction adapters normalizing compute, storage, database, and container operations across AWS, Azure, GCP, and Oracle OCI."
+    ],
+    technology: [
+      "Python 3.11+ / FastMCP",
+      "AWS / Azure / GCP / OCI",
+      "Model Context Protocol",
+      "FastAPI & Typer CLI",
+      "Keyring Cryptographic Vault",
+      "Docker Containerized"
+    ],
+    evolution: "Engineered to solve tool-call explosion in LLM agents managing hyperscalers; transitioned from static function definitions to a dynamic search-and-execute MCP server exposing 9 infrastructure domains with zero credential exposure.",
+    challenges: [
+      "Normalizing heterogeneous cloud API error codes and SDK responses into standard, agent-interpretable JSON schemas.",
+      "Preventing cloud credentials and IAM tokens from appearing in agent scratchpads, prompt logs, or stack traces.",
+      "Ensuring graceful degradation when optional cloud provider SDKs are not installed in minimal container builds."
+    ],
+    decisions: [
+      {
+        decision: "Adopted FastMCP and Model Context Protocol specification for tool exposure.",
+        rationale: "Ensures seamless plug-and-play interoperability with modern agentic hosts (Claude Desktop, cursor, custom agent runtimes) without proprietary glue code."
+      },
+      {
+        decision: "Enforced OS-level keyring encryption and runtime secret masking.",
+        rationale: "Prevents high-privilege multi-cloud credentials from ever escaping through LLM token outputs or observability logs."
+      }
+    ],
+    results: [
+      { metric: "Supported Cloud Providers", value: "4 Clouds", description: "Full orchestration across AWS, Azure, Google Cloud and Oracle OCI" },
+      { metric: "Tool Domains", value: "9 Categories", description: "Compute, Storage, Database, Network, IAM, Serverless, Containers, Monitoring, Security" },
+      { metric: "Credential Leakage", value: "0.00%", description: "Keyring encryption and zero-log sanitization on all secret vectors" }
+    ],
+    evidence: "Public GitHub repository with full source code, FastMCP implementation, CLI commands, Dockerfile, and automated tests at https://github.com/RodrigoDiasDeOliveira/Triminds-Ai-cloud-Administrator."
+  },
+  {
     id: "multi-cloud-sovereign-mesh",
     title: "Multi-Cloud Sovereign Mesh",
     subtitle: "Zero-Trust Inter-Cluster Federation for European Sovereign Data Workloads",

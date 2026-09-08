@@ -2,6 +2,7 @@ import React from 'react';
 import { Terminal, ArrowUpRight, Mail, Award, CheckCircle2 } from 'lucide-react';
 import { NavigationTab } from '../types';
 import { useLanguage } from '../i18n/LanguageContext';
+import { CASE_STUDIES } from '../data/caseStudiesData';
 
 interface FooterProps {
   onNavigate: (tab: NavigationTab) => void;
@@ -147,7 +148,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
                   onClick={() => onNavigate('projects')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer font-medium"
                 >
-                  {t('projects.categoryBuilt')} (5)
+                  {t('projects.categoryBuilt')} ({CASE_STUDIES.filter(s => s.category === 'what-we-built').length})
                 </button>
               </li>
               <li>
@@ -155,7 +156,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
                   onClick={() => onNavigate('projects')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  {t('projects.categoryExploring')}
+                  {t('projects.categoryExploring')} ({CASE_STUDIES.filter(s => s.category === 'what-we-are-exploring').length})
                 </button>
               </li>
               <li>
@@ -163,7 +164,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
                   onClick={() => onNavigate('projects')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  {t('projects.categoryPlanned')}
+                  {t('projects.categoryPlanned')} ({CASE_STUDIES.filter(s => s.category === 'what-is-planned').length})
                 </button>
               </li>
               <li>

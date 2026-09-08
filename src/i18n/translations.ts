@@ -174,9 +174,12 @@ export type TranslationKey =
   | 'contact.scopeOption3'
   | 'contact.scopeOption4'
   | 'contact.scopeOption5'
+  | 'contact.scopeOption6'
   | 'contact.scale'
   | 'contact.objective'
   | 'contact.objectivePlaceholder'
+  | 'contact.objectiveGeneral'
+  | 'contact.objectiveGeneralPlaceholder'
   | 'contact.gdprConsent'
   | 'contact.submitBtn'
   | 'contact.directEmailBtn'
@@ -507,9 +510,12 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'contact.scopeOption3': 'Deterministic/Controlled Agentic Workflows',
     'contact.scopeOption4': 'Geospatial AI & Satellite Analytics',
     'contact.scopeOption5': 'Zero-Trust Security & Observability Gateway',
+    'contact.scopeOption6': 'General Inquiries',
     'contact.scale': 'Project Scale & Target Timeline',
     'contact.objective': 'Engineering Challenge & Operational Context',
     'contact.objectivePlaceholder': 'Describe your technical challenge, data volume, latency targets, and compliance requirements...',
+    'contact.objectiveGeneral': 'Inquiry Details & Message',
+    'contact.objectiveGeneralPlaceholder': 'Please describe your inquiry, partnership interest, or general request...',
     'contact.gdprConsent': 'I acknowledge that the data submitted will be processed under European Union GDPR and used strictly for architectural assessment.',
     'contact.submitBtn': 'Generate Technical Scope & Send Inquiry',
     'contact.directEmailBtn': 'Direct Send via Email Client',
@@ -840,9 +846,12 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'contact.scopeOption3': 'Fluxos de Agentes Determinísticos e Controlados',
     'contact.scopeOption4': 'IA Geoespacial e Análise Satelital',
     'contact.scopeOption5': 'Gateway de Segurança Zero-Trust e Observabilidade',
+    'contact.scopeOption6': 'Assuntos Gerais',
     'contact.scale': 'Escala do Projeto e Prazo Alvo',
     'contact.objective': 'Desafio de Engenharia e Contexto Operacional',
     'contact.objectivePlaceholder': 'Descreva seu desafio técnico, volume de dados, metas de latência e requisitos regulatórios...',
+    'contact.objectiveGeneral': 'Detalhes da Mensagem e Solicitação',
+    'contact.objectiveGeneralPlaceholder': 'Descreva sua dúvida, interesse em parceria ou solicitação geral...',
     'contact.gdprConsent': 'Reconheço que os dados enviados serão processados sob o GDPR da União Europeia e utilizados estritamente para avaliação arquitetural.',
     'contact.submitBtn': 'Gerar Especificação Técnica e Enviar',
     'contact.directEmailBtn': 'Envio Direto via Cliente de E-mail',
@@ -1173,9 +1182,12 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     'contact.scopeOption3': 'Flujos de Agentes Deterministas y Controlados',
     'contact.scopeOption4': 'IA Geoespacial y Analítica Satelital',
     'contact.scopeOption5': 'Gateway de Seguridad Zero-Trust y Observabilidad',
+    'contact.scopeOption6': 'Asuntos Generales',
     'contact.scale': 'Escala del Proyecto y Urgencia',
     'contact.objective': 'Desafío de Ingeniería y Contexto Operativo',
     'contact.objectivePlaceholder': 'Describa su desafío técnico, volumen de datos, objetivos de latencia y requisitos normativos...',
+    'contact.objectiveGeneral': 'Detalles del Mensaje y Solicitud',
+    'contact.objectiveGeneralPlaceholder': 'Describa su consulta, interés en colaboración o solicitud general...',
     'contact.gdprConsent': 'Reconozco que los datos enviados serán tratados bajo el RGPD de la Unión Europea y utilizados únicamente para la evaluación de la arquitectura.',
     'contact.submitBtn': 'Generar Especificación Técnica y Enviar',
     'contact.directEmailBtn': 'Envío Directo mediante Cliente de Correo',

@@ -22,17 +22,23 @@ export const ContactSection: React.FC = () => {
     setTimeout(() => setCopied(false), 2500);
   };
 
+  const isGeneralInquiry = formData.domain === 'General Inquiries';
+
   const getMailtoHref = () => {
-    const subject = encodeURIComponent(`[Triminds Architecture Audit] ${formData.domain} - ${formData.company || 'Enterprise'}`);
+    const subject = encodeURIComponent(
+      isGeneralInquiry
+        ? `[Triminds Contact] ${formData.company ? `${formData.company} - ` : ''}General Inquiry`
+        : `[Triminds Architecture Audit] ${formData.domain} - ${formData.company || 'Enterprise'}`
+    );
     const body = encodeURIComponent(
 `Contact Person: ${formData.name || 'Not specified'}
 Enterprise Email: ${formData.email || 'Not specified'}
 Organization: ${formData.company || 'Not specified'}
 Engagement Scope: ${formData.domain}
-Operational Scale: ${formData.scale}
+${isGeneralInquiry ? 'Demand Type: General Inquiries' : `Operational Scale: ${formData.scale}`}
 
-Technical Objective & Architectural Context:
-${formData.message || 'Please assess our architecture requirements.'}
+${isGeneralInquiry ? 'Inquiry Details & Message:' : 'Technical Objective & Architectural Context:'}
+${formData.message || 'Please assess our requirements.'}
 
 ---
 Transmitted via Triminds Corporate Gateway (DOC-TRIMINDS-POSITIONING-V1.0)`
@@ -246,30 +252,35 @@ Transmitted via Triminds Corporate Gateway (DOC-TRIMINDS-POSITIONING-V1.0)`
                       <option value="Deterministic/Controlled Agentic Workflows">{t('contact.scopeOption3')}</option>
                       <option value="Geospatial AI & Satellite Analytics">{t('contact.scopeOption4')}</option>
                       <option value="Zero-Trust Security & Observability Gateway">{t('contact.scopeOption5')}</option>
+                      <option value="General Inquiries">{t('contact.scopeOption6')}</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <label className="text-[#70706B] font-mono text-[11px] block">{t('contact.scale')}</label>
-                  <select
-                    value={formData.scale}
-                    onChange={(e) => setFormData({ ...formData, scale: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-[#F4F4F1] border border-[#D1D1CD] rounded text-[#1A1A1A] focus:outline-none focus:border-[#1A1A1A] font-sans text-xs"
-                  >
-                    <option>&lt; 100k queries / month (Pilot / Evaluation)</option>
-                    <option>100k - 1M queries / month (Production Tier 1)</option>
-                    <option>1M - 10M queries / month (High Throughput Enterprise)</option>
-                    <option>&gt; 10M queries / month (Critical Infrastructure)</option>
-                  </select>
-                </div>
+                {!isGeneralInquiry && (
+                  <div className="space-y-1 animate-in fade-in duration-200">
+                    <label className="text-[#70706B] font-mono text-[11px] block">{t('contact.scale')}</label>
+                    <select
+                      value={formData.scale}
+                      onChange={(e) => setFormData({ ...formData, scale: e.target.value })}
+                      className="w-full px-3.5 py-2.5 bg-[#F4F4F1] border border-[#D1D1CD] rounded text-[#1A1A1A] focus:outline-none focus:border-[#1A1A1A] font-sans text-xs"
+                    >
+                      <option>&lt; 100k queries / month (Pilot / Evaluation)</option>
+                      <option>100k - 1M queries / month (Production Tier 1)</option>
+                      <option>1M - 10M queries / month (High Throughput Enterprise)</option>
+                      <option>&gt; 10M queries / month (Critical Infrastructure)</option>
+                    </select>
+                  </div>
+                )}
 
                 <div className="space-y-1">
-                  <label className="text-[#70706B] font-mono text-[11px] block">{t('contact.objective')}</label>
+                  <label className="text-[#70706B] font-mono text-[11px] block">
+                    {isGeneralInquiry ? t('contact.objectiveGeneral') : t('contact.objective')}
+                  </label>
                   <textarea
                     rows={4}
                     required
-                    placeholder={t('contact.objectivePlaceholder')}
+                    placeholder={isGeneralInquiry ? t('contact.objectiveGeneralPlaceholder') : t('contact.objectivePlaceholder')}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full px-3.5 py-2.5 bg-[#F4F4F1] border border-[#D1D1CD] rounded text-[#1A1A1A] focus:outline-none focus:border-[#1A1A1A] font-sans text-xs"
