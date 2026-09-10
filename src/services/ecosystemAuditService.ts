@@ -47,10 +47,10 @@ export function getCachedSnapshot(): { snapshot: EcosystemSnapshot; cachedAt: st
 /**
  * Stores validated snapshot in sessionStorage with timestamp
  */
-export function setCachedSnapshot(snapshot: EcosystemSnapshot): void {
+export function setCachedSnapshot(snapshot: EcosystemSnapshot, timestamp: string = new Date().toISOString()): void {
   try {
     sessionStorage.setItem(CACHE_KEY, JSON.stringify(snapshot));
-    sessionStorage.setItem(CACHE_TIMESTAMP_KEY, new Date().toISOString());
+    sessionStorage.setItem(CACHE_TIMESTAMP_KEY, timestamp);
   } catch {
     // Ignore storage quota or disabled storage gracefully
   }
@@ -74,9 +74,10 @@ export function clearAuditCache(): void {
  * - Never invents data
  * - Never converts an error into a false GREEN
  * - Clearly indicates live vs cached data
+ * - Updates refresh timestamp to reflect exact time of operation
  */
 export async function fetchEcosystemSnapshot(forceFresh = false): Promise<AuditServiceState> {
-  const auditUrl = (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_ECOSYSTEM_AUDIT_URL)
+  const baseAuditUrl = (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_ECOSYSTEM_AUDIT_URL)
     ? (import.meta as any).env.VITE_ECOSYSTEM_AUDIT_URL
     : '/data/ecosystem-audit-snapshot.json';
 
@@ -98,8 +99,17 @@ export async function fetchEcosystemSnapshot(forceFresh = false): Promise<AuditS
   }
 
   try {
+    // Cache-bust if forceFresh is requested
+    const auditUrl = forceFresh
+      ? `${baseAuditUrl}${baseAuditUrl.includes('?') ? '&' : '?'}_t=${Date.now()}`
+      : baseAuditUrl;
+
     const response = await fetch(auditUrl, {
-      headers: { 'Accept': 'application/json' },
+      headers: { 
+        'Accept': 'application/json',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache'
+      },
       cache: forceFresh ? 'reload' : 'default'
     });
 
@@ -112,14 +122,17 @@ export async function fetchEcosystemSnapshot(forceFresh = false): Promise<AuditS
       throw new Error('Ecosystem Audit data contract validation failed: invalid schema or missing projects');
     }
 
-    // Save to cache
-    setCachedSnapshot(json);
+    // Capture the exact time of this refresh operation
+    const refreshTimestamp = new Date().toISOString();
+
+    // Save to cache with the exact timestamp
+    setCachedSnapshot(json, refreshTimestamp);
 
     return {
       data: json,
       status: 'live',
       error: null,
-      lastUpdated: json.generatedAt || new Date().toISOString(),
+      lastUpdated: refreshTimestamp,
       isCached: false
     };
   } catch (err: any) {

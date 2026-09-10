@@ -189,11 +189,16 @@ describe('Triminds Ecosystem Audit Integration Suite (Section 10 Requirements)',
 
     try {
       const { fetchEcosystemSnapshot } = await import('../src/services/ecosystemAuditService');
+      const beforeTime = Date.now();
       const result = await fetchEcosystemSnapshot(true);
+      const afterTime = Date.now();
 
       assert.equal(fetchCalledWithReload, true, 'forceFresh must instruct fetch to bypass browser cache');
       assert.equal(result.status, 'live');
       assert.equal(result.isCached, false);
+      assert.ok(result.lastUpdated, 'Refresh must return a valid lastUpdated timestamp');
+      const refreshTimeMs = new Date(result.lastUpdated!).getTime();
+      assert.ok(refreshTimeMs >= beforeTime && refreshTimeMs <= afterTime, 'lastUpdated must record the exact time of the refresh execution');
     } finally {
       globalThis.fetch = originalFetch;
     }

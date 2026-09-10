@@ -13,8 +13,19 @@ export function useEcosystemAudit() {
 
   const loadData = useCallback(async (forceFresh = false) => {
     setState(prev => ({ ...prev, status: 'loading' }));
+    const startTime = Date.now();
     const result = await fetchEcosystemSnapshot(forceFresh);
+    
+    // Provide a brief tactile confirmation on manual user refresh if network is near-instantaneous
+    if (forceFresh) {
+      const elapsed = Date.now() - startTime;
+      if (elapsed < 300) {
+        await new Promise(resolve => setTimeout(resolve, 300 - elapsed));
+      }
+    }
+    
     setState(result);
+    return result;
   }, []);
 
   useEffect(() => {

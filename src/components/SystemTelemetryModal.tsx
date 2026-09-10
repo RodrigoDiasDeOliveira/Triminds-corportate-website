@@ -251,15 +251,20 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-2 self-end sm:self-auto">
+          <div className="flex items-center gap-2.5 self-end sm:self-auto">
+            {lastUpdated && (
+              <span className="text-[10px] text-[#70706B] font-mono hidden sm:inline">
+                Refreshed: <strong className="text-[#1A1A1A]">{new Date(lastUpdated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</strong>
+              </span>
+            )}
             <button
               onClick={() => refresh()}
               disabled={isLoading}
               title="Refresh authoritative audit data from Triminds-ecosystem-audit"
-              className="p-1.5 rounded-lg border border-[#D1D1CD] text-[#70706B] hover:text-[#1A1A1A] hover:bg-[#F4F4F1] transition-colors cursor-pointer flex items-center gap-1.5 text-[11px]"
+              className="p-1.5 px-2.5 rounded-lg border border-[#D1D1CD] text-[#70706B] hover:text-[#1A1A1A] hover:bg-[#F4F4F1] transition-colors cursor-pointer flex items-center gap-1.5 text-[11px]"
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-emerald-600' : ''}`} />
-              <span className="hidden sm:inline">Refresh Audit</span>
+              <span className="inline">{isLoading ? 'Refreshing...' : 'Refresh Audit'}</span>
             </button>
 
             <button
@@ -400,11 +405,13 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
                 </div>
 
                 <div className="p-3 rounded-lg bg-white border border-[#D1D1CD] space-y-1">
-                  <div className="text-[10px] text-[#70706B] uppercase">Last Audit</div>
-                  <div className="text-[11px] font-bold text-[#1A1A1A] truncate">
-                    {lastUpdated ? new Date(lastUpdated).toLocaleDateString() : '2026-09-09'}
+                  <div className="text-[10px] text-[#70706B] uppercase">Last Refreshed</div>
+                  <div className="text-[11px] font-bold text-[#1A1A1A] truncate" title={lastUpdated ? new Date(lastUpdated).toLocaleString() : 'Initial'}>
+                    {lastUpdated ? new Date(lastUpdated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Initial'}
                   </div>
-                  <div className="text-[9px] text-[#70706B] truncate">v1.4.2 Dual-Tier</div>
+                  <div className="text-[9px] text-[#70706B] truncate">
+                    {lastUpdated ? new Date(lastUpdated).toLocaleDateString() : 'Dual-Tier'}
+                  </div>
                 </div>
               </div>
 
@@ -694,15 +701,20 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
         </div>
 
         {/* Modal Footer Bar */}
-        <div className="flex items-center justify-between p-3.5 sm:p-4 border-t border-[#D1D1CD] bg-white text-[11px]">
-          <div className="flex items-center gap-2 text-[#70706B] text-[10px] font-mono">
+        <div className="flex flex-col sm:flex-row items-center justify-between p-3.5 sm:p-4 border-t border-[#D1D1CD] bg-white text-[11px] gap-2">
+          <div className="flex items-center gap-2 text-[#70706B] text-[10px] font-mono flex-wrap">
             <span>Authoritative Source: Triminds-ecosystem-audit</span>
             <span>•</span>
-            <span>Refreshed: {lastUpdated ? new Date(lastUpdated).toLocaleTimeString() : 'Initial'}</span>
+            <span>
+              Refreshed: <strong className="text-[#1A1A1A]">{lastUpdated ? new Date(lastUpdated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Initial'}</strong>
+            </span>
+            {isCached && (
+              <span className="text-amber-700 font-medium">(Cached snapshot)</span>
+            )}
           </div>
           <button
             onClick={onClose}
-            className="px-4 py-1.5 rounded bg-[#1A1A1A] text-white font-semibold hover:bg-black transition-colors cursor-pointer text-xs"
+            className="px-4 py-1.5 rounded bg-[#1A1A1A] text-white font-semibold hover:bg-black transition-colors cursor-pointer text-xs self-end sm:self-auto"
           >
             Close Dashboard
           </button>
