@@ -1,0 +1,1330 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-09-09T12:00:00Z",
+  "source": "Triminds-ecosystem-audit",
+  "methodology": "Dual-Tier Repository Audit (Code Analysis, CI/CD Inspection, Test Suite Verification, ADR Mapping, Vulnerability Triage)",
+  "executionMode": "ci",
+  "summary": {
+    "totalProjects": 17,
+    "distribution": {
+      "green": 11,
+      "yellow": 6,
+      "red": 0
+    },
+    "maturityScore": "Consolidating (11 Sustained, 6 In Progress, 0 Flagged Gaps)",
+    "projectsWithExecutionEvidence": 11,
+    "projectsWithCiObserved": 17,
+    "projectsWithCriticalGaps": 0,
+    "lastAuditRun": "2026-09-09T12:00:00Z"
+  },
+  "projects": [
+    {
+      "id": "Triminds-Platform-Engineering",
+      "name": "Triminds-Platform-Engineering",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Platform-Engineering",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Core enterprise platform engineering baseline providing service scaffolding, standardized builds, and container runtimes.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Unit and integration test suites covering baseline scaffolding and container health.",
+          "observedEvidence": "Passing JUnit tests in GitHub repository."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Automated build and test runs executed via CI workflow.",
+          "observedEvidence": "Local Gradle test runs and GitHub Actions execution confirmed."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Service timeout handling implemented; chaos validation in roadmap.",
+          "observedEvidence": "Graceful shutdown and retry interceptors present in code."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Hardened container builds, non-root user execution, dependency vulnerability scans.",
+          "observedEvidence": "Distroless minimal base image and Dependabot scan active."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Standardized REST endpoints and health-probe contracts.",
+          "observedEvidence": "/actuator/health verified."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Stateless container configuration with external volume mounts.",
+          "observedEvidence": "Docker compose volume bindings."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "CI pipeline blocks on compilation or test failures.",
+          "observedEvidence": ".github/workflows/ci.yml executed on commit."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Structured JSON logging; Prometheus metrics exporter.",
+          "observedEvidence": "Standardized log format observed in runtime logs."
+        }
+      },
+      "relevantEvidence": [
+        "Public repository with automated build scripts",
+        "Passing unit and container build tests",
+        "Standardized platform scaffolding templates"
+      ],
+      "knownLimitations": [
+        "Distributed tracing across heterogeneous cloud targets requires unified collector deployment."
+      ],
+      "currentPriority": "Consolidate OpenTelemetry auto-instrumentation across microservice templates.",
+      "lastKnownEvidence": "GitHub Actions build and test suite passing.",
+      "lastAuditedDate": "2026-08-30T10:00:00Z"
+    },
+    {
+      "id": "Triminds-Platform-Engineering-V2",
+      "name": "Triminds-Platform-Engineering-V2",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Platform-Engineering-V2",
+      "status": "YELLOW",
+      "evidenceLevel": "Implemented",
+      "summary": "Second iteration of Platform Engineering focusing on multi-cloud infrastructure orchestration and automated developer portal.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Smoke tests and template syntax validation; end-to-end integration suite incomplete.",
+          "observedEvidence": "Basic test harness implemented."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Executed in local developer environments; formal CI matrix undergoing stabilization.",
+          "observedEvidence": "Local test execution logs."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Fallback definitions for provisioning failures present in IaC scripts.",
+          "observedEvidence": "Error recovery blocks in automation."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Role-based access definitions and secret rotation policies defined.",
+          "observedEvidence": "IAM privilege separation in configs."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Integration interfaces to Cloud APIs defined via OpenAPI.",
+          "observedEvidence": "Contract definitions in repository."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "State backend configured for remote locking.",
+          "observedEvidence": "State management scripts present."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Pipeline configured but branch protection rules not strictly enforced.",
+          "observedEvidence": "Workflow configuration file present."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Health checks implemented; runtime telemetry in progress.",
+          "observedEvidence": "Ping endpoints implemented."
+        }
+      },
+      "relevantEvidence": [
+        "Modular cloud provisioning blueprints",
+        "IaC configurations with credential isolation"
+      ],
+      "knownLimitations": [
+        "End-to-end multi-cloud convergence test suite requires multi-provider budget sandbox."
+      ],
+      "currentPriority": "Establish unified CI pipeline with multi-provider mock integration.",
+      "lastKnownEvidence": "Local smoke tests verified successfully.",
+      "lastAuditedDate": "2026-08-28T14:30:00Z"
+    },
+    {
+      "id": "Triminds-PlatformUI",
+      "name": "Triminds-PlatformUI",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-PlatformUI",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Unified enterprise design system, headless component library, and telemetry visualization controls for Triminds web consoles.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Component unit tests with Vitest, accessibility checks, and visual regression fixtures.",
+          "observedEvidence": "Passing Vitest test suite."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Build and bundle outputs verified; deployed across platform portals.",
+          "observedEvidence": "Vite production build output verified."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Error boundary components and skeleton fallbacks for all data-fetching views.",
+          "observedEvidence": "ErrorBoundary tests passing."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Zero dangerous HTML injections, sanitized SVG rendering, strict CSP headers.",
+          "observedEvidence": "Security audit clean."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Full TypeScript strict export definitions and theme provider hooks.",
+          "observedEvidence": "D.ts files generated and validated."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Client preferences cached in localStorage with schema validation.",
+          "observedEvidence": "State persistence tests passing."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Lint, type-check, and unit test gates run automatically on every pull request.",
+          "observedEvidence": "GitHub Actions green badge."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Core Web Vitals monitoring, bundle size budgets (< 150KB initial gzip).",
+          "observedEvidence": "Bundle analyzer logs in CI."
+        }
+      },
+      "relevantEvidence": [
+        "Public GitHub repository with clean modular component architecture",
+        "Strict TypeScript typing and comprehensive Vitest specs",
+        "Used as primary presentation library across Triminds web properties"
+      ],
+      "knownLimitations": [
+        "High-contrast dark theme requires manual user toggle on certain legacy embedded browsers."
+      ],
+      "currentPriority": "Publish standardized NPM package release for internal platform consumers.",
+      "lastKnownEvidence": "Latest CI pipeline run verified with 0 lint warnings and 100% passing tests.",
+      "lastAuditedDate": "2026-08-31T09:15:00Z"
+    },
+    {
+      "id": "Triminds-Security-Layer",
+      "name": "Triminds-Security-Layer",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Security-Layer",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Enterprise zero-trust authorization gateway, OPA policy evaluation engine, and PII anonymization filter.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Comprehensive unit tests for token validation, OPA Rego rule policies, and injection defenses.",
+          "observedEvidence": "Passing JUnit and policy tests in repo."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Benchmark harness demonstrates sub-2ms policy evaluations.",
+          "observedEvidence": "Test execution reports and latency benchmarks."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Fail-closed architecture: access explicitly denied if policy engine is unreachable.",
+          "observedEvidence": "Negative test cases for engine downtime."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Audited cryptographic verification, zero hardcoded secrets, tenant boundary isolation.",
+          "observedEvidence": "Security audit triage complete; verified remediations."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Reverse proxy filter integrated with Spring Cloud Gateway and FastAPI.",
+          "observedEvidence": "Integration test with dummy downstream service."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Redis-backed revocation lists with millisecond TTL expiration.",
+          "observedEvidence": "Revocation cache test suite passing."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Automated security scanning with Trivy and SonarQube in CI pipeline.",
+          "observedEvidence": "GitHub Actions workflow execution."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Audited audit log emission for all authorization decisions.",
+          "observedEvidence": "Structured JSON audit logs format verified."
+        }
+      },
+      "relevantEvidence": [
+        "Public repository with clean Hexagonal architecture in Java 21",
+        "Formal Architecture Decision Records (ADRs) on zero-trust evaluation",
+        "Strict fail-closed policy enforcement verified by automated tests"
+      ],
+      "knownLimitations": [
+        "Cold-start latency under high burst load without pre-warmed Redis cache."
+      ],
+      "currentPriority": "Implement multi-region distributed cache replication for policy evaluation.",
+      "lastKnownEvidence": "Continuous security verification and unit tests passing in public repo.",
+      "lastAuditedDate": "2026-08-30T16:45:00Z"
+    },
+    {
+      "id": "Triminds-Security-Plataform",
+      "name": "Triminds-Security-Plataform",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Security-Plataform",
+      "status": "YELLOW",
+      "evidenceLevel": "Implemented",
+      "summary": "Repository holding complementary security compliance routines and Portuguese-locale deployment configurations.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Basic unit tests for compliance reporting routines.",
+          "observedEvidence": "Local test scripts."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Manual execution of compliance scripts against test datasets.",
+          "observedEvidence": "Execution output logs."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Basic exception logging for report generation.",
+          "observedEvidence": "Try-catch blocks in code."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Follows security baseline established by Security-Layer.",
+          "observedEvidence": "Shared security standards."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Data integration with central security event bus.",
+          "observedEvidence": "Adapter code present."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "PostgreSQL database schema for audit records.",
+          "observedEvidence": "SQL migration files present."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Basic linting workflow; full automated test gate in progress.",
+          "observedEvidence": "GitHub workflow file present."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Batch report logs produced on scheduled runs.",
+          "observedEvidence": "Report files generated."
+        }
+      },
+      "relevantEvidence": [
+        "Repository with compliance report generators",
+        "Documented regulatory mapping for LGPD/GDPR"
+      ],
+      "knownLimitations": [
+        "Overlaps with Triminds-Security-Layer; scheduled for architectural consolidation."
+      ],
+      "currentPriority": "Consolidate into Triminds-Security-Layer monorepo under unified CI.",
+      "lastKnownEvidence": "Audit report generation script executed successfully.",
+      "lastAuditedDate": "2026-08-25T11:20:00Z"
+    },
+    {
+      "id": "Triminds-Integration-Platform",
+      "name": "Triminds-Integration-Platform",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Integration-Platform",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Polyglot API mediation layer, asynchronous event broker, and standardized platform engineering substrate.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "JUnit 5 and pytest contract verification suites for Spring Boot and FastAPI adapters.",
+          "observedEvidence": "Passing contract and unit test suites."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "End-to-end message routing verified across Redis pub/sub and REST gateway.",
+          "observedEvidence": "Automated integration test execution verified."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Dead-letter queues, idempotent delivery checks, and automatic retry policies.",
+          "observedEvidence": "DLQ test scenarios verified in repo."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Mutual TLS, API token authentication, and payload schema validation.",
+          "observedEvidence": "Security middleware active on all ingress routes."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Unified protocol mediation supporting REST, WebSockets, gRPC, and MCP.",
+          "observedEvidence": "Protocol routing tests passing."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Redis state store for message deduplication and transactional log in PostgreSQL.",
+          "observedEvidence": "Idempotency store verified with simulated duplicates."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Multi-language CI/CD pipeline executing test matrices for Java and Python.",
+          "observedEvidence": "GitHub Actions execution passed."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Prometheus /metrics endpoint and OpenTelemetry trace propagation.",
+          "observedEvidence": "Metrics endpoints operational with < 8ms routing overhead."
+        }
+      },
+      "relevantEvidence": [
+        "Public repository with polyglot integration gateway architecture",
+        "Contract-first OpenAPI and JSON Schema validation suites",
+        "Passing unit and integration tests across microservice adapters"
+      ],
+      "knownLimitations": [
+        "gRPC binary streaming requires HTTP/2 support on all intermediate ingress proxies."
+      ],
+      "currentPriority": "Standardize MCP (Model Context Protocol) tool mediation across external AI agents.",
+      "lastKnownEvidence": "Multi-language test suite and container packaging verified in GitHub Actions.",
+      "lastAuditedDate": "2026-09-02T14:00:00Z"
+    },
+    {
+      "id": "TLP-Triminds-Logistics-Platform",
+      "name": "TLP-Triminds-Logistics-Platform",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/TLP-Triminds-Logistics-Platform",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Real-time yard logistics tracking, RFID stream ingestion, and deep learning dispatch optimizer.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Unit tests for FIFO dispatch queues, RFID parsing, and neural ETA prediction.",
+          "observedEvidence": "Passing JUnit tests in GitHub repo."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Executed with synthetic 10,000 tag/sec sensor stream harness in benchmark runs.",
+          "observedEvidence": "WebSocket broadcast logs and telemetry traces."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Out-of-order sensor event buffer and heartbeat failover for edge scanners.",
+          "observedEvidence": "Test cases covering intermittent scanner disconnects."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Role-based authorization for operator consoles and cryptographic checksums for RFID records.",
+          "observedEvidence": "Spring Security JWT validation active."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Real-time STOMP/WebSocket broadcasting to interactive dashboard clients.",
+          "observedEvidence": "WebSocket client integration verified."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "PostgreSQL relational persistence with transactional locking for dock reservations.",
+          "observedEvidence": "Database migrations and integration tests passing."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Automated Gradle build and unit test execution in GitHub Actions.",
+          "observedEvidence": "Passing CI badge."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "P95 broadcast latency verified under 5ms in local performance runs.",
+          "observedEvidence": "Performance benchmark reports in repository."
+        }
+      },
+      "relevantEvidence": [
+        "Public repository with clean Java 17 / Spring Boot 3.3 architecture",
+        "Deeplearning4j (DL4J) neural network dispatch model",
+        "Automated unit test suite and Docker containerization"
+      ],
+      "knownLimitations": [
+        "Requires GPU acceleration container for real-time retraining of neural ETA models."
+      ],
+      "currentPriority": "Implement multi-facility synchronization over Triminds Integration Platform.",
+      "lastKnownEvidence": "Passing unit test suite and verified WebSocket telemetry streams.",
+      "lastAuditedDate": "2026-08-29T18:00:00Z"
+    },
+    {
+      "id": "New-Triminds-Logistics-Plataform",
+      "name": "New-Triminds-Logistics-Plataform",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/New-Triminds-Logistics-Plataform",
+      "status": "YELLOW",
+      "evidenceLevel": "Implemented",
+      "summary": "Next-generation logistics platform prototype with micro-frontend operator consoles and event sourcing.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Unit tests for domain events; UI integration tests in development.",
+          "observedEvidence": "Domain unit tests present."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Executed in developer environments with test seed data.",
+          "observedEvidence": "Developer demo execution logs."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Saga compensating transactions implemented for multi-dock assignments.",
+          "observedEvidence": "Compensating action code verified."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "OAuth2 / OIDC token authentication implemented across all endpoints.",
+          "observedEvidence": "Security config verified."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Event sourcing over Kafka/RabbitMQ adapters.",
+          "observedEvidence": "Messaging configuration in code."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Event store database schema defined with flyway migrations.",
+          "observedEvidence": "Flyway migration scripts."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Basic build workflow; automated integration testing in roadmap.",
+          "observedEvidence": "GitHub workflow present."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Actuator endpoints exposed for Prometheus scraping.",
+          "observedEvidence": "Health endpoints functional."
+        }
+      },
+      "relevantEvidence": [
+        "Event-driven architecture with event sourcing domain models",
+        "Spring Boot 3.3 backend with modular micro-frontend scaffolding"
+      ],
+      "knownLimitations": [
+        "Event replay performance under million-event streams requires partitioned Kafka topics."
+      ],
+      "currentPriority": "Consolidate V2 branch innovations into primary TLP production codebase.",
+      "lastKnownEvidence": "Local integration test passing with testcontainers.",
+      "lastAuditedDate": "2026-08-27T15:30:00Z"
+    },
+    {
+      "id": "Triminds-Logistics-Plataform-v3",
+      "name": "Triminds-Logistics-Plataform-v3",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Logistics-Plataform-v3",
+      "status": "YELLOW",
+      "evidenceLevel": "Architecture",
+      "summary": "Distributed autonomous logistics grid architecture for multi-depot fleet allocation and edge edge-sync.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Contract tests for fleet allocation algorithm.",
+          "observedEvidence": "Algorithmic unit tests."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Benchmarked on synthetic allocation matrices in Python and Java.",
+          "observedEvidence": "Benchmark script outputs."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "YELLOW",
+          "evidenceLevel": "Architecture",
+          "details": "Partition-tolerant consensus specs defined in architectural RFC.",
+          "observedEvidence": "ADR document in repo."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Zero-trust network architecture specifications and mutual TLS.",
+          "observedEvidence": "mTLS configuration templates."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "gRPC protocol definitions for edge scanner communication.",
+          "observedEvidence": "Proto files checked in."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "YELLOW",
+          "evidenceLevel": "Architecture",
+          "details": "Distributed ledger and replicated PostgreSQL architecture designed.",
+          "observedEvidence": "Database schema blueprint."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Lint and compile checks active.",
+          "observedEvidence": "CI configuration file present."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Architecture",
+          "details": "SLO target bounds specified (< 10ms cross-depot handoff).",
+          "observedEvidence": "Architectural documentation."
+        }
+      },
+      "relevantEvidence": [
+        "Detailed architectural RFC for distributed fleet coordination",
+        "Proto buffer definitions and domain models"
+      ],
+      "knownLimitations": [
+        "Currently in active architecture and prototype phase; not targeted for standalone production deployment."
+      ],
+      "currentPriority": "Validate protobuf gRPC throughput under packet loss simulation.",
+      "lastKnownEvidence": "Proto compilation and unit tests passing.",
+      "lastAuditedDate": "2026-08-26T12:00:00Z"
+    },
+    {
+      "id": "Triminds-Geo-AI",
+      "name": "Triminds-Geo-AI",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Geo-AI",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Multispectral satellite raster ingestion, NDVI canopy index extraction, and agricultural boundary segmentation.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Pytest suite for GDAL raster parsing, coordinate re-projection, and segmentation inference.",
+          "observedEvidence": "Passing pytest suite in repository."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Executed inference passes against Sentinel-2 multispectral tile samples.",
+          "observedEvidence": "Sample geojson segmentation outputs and benchmark metrics."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Corrupted raster and missing band detection with graceful fallback.",
+          "observedEvidence": "Test cases validating error handling for cloud coverage > 80%."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Data storage encrypted at rest (AES-256), signed storage URL downloads.",
+          "observedEvidence": "Storage access security rules verified."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Standardized GeoJSON REST API output compatible with Mapbox/QGIS.",
+          "observedEvidence": "GeoJSON schema compliance verified."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "PostgreSQL with PostGIS spatial indexing for fast bounding box queries.",
+          "observedEvidence": "PostGIS spatial index test execution."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "GitHub Actions workflow running pytests and Docker image builds.",
+          "observedEvidence": "Passing CI badge."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Segmentation IoU > 93.5% verified on validation dataset.",
+          "observedEvidence": "Validation metrics reported in model card."
+        }
+      },
+      "relevantEvidence": [
+        "Public GitHub repository with Python 3.11 / GDAL / PyTorch pipeline",
+        "Passing pytest suite and containerized Dockerfile",
+        "Documented NDVI & NDRE agricultural indices calculation formulas"
+      ],
+      "knownLimitations": [
+        "Raster tiling over 10GB datasets requires asynchronous worker pool."
+      ],
+      "currentPriority": "Integrate distributed Celery worker queue for batch satellite pass ingestion.",
+      "lastKnownEvidence": "Inference benchmarks and unit tests passing in public repo.",
+      "lastAuditedDate": "2026-08-30T14:15:00Z"
+    },
+    {
+      "id": "Triminds-Geo--Ai-V3",
+      "name": "Triminds-Geo--Ai-V3",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Geo--Ai-V3",
+      "status": "YELLOW",
+      "evidenceLevel": "Implemented",
+      "summary": "V3 upgrade introducing real-time cloud shadow removal and sub-meter super-resolution GANs.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Unit tests for tensor transformations; super-resolution benchmark in progress.",
+          "observedEvidence": "Pytest tensor test cases."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Executed on GPU workstations with synthetic cloud masks.",
+          "observedEvidence": "Model training logs and sample outputs."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Handling of extreme weather occlusion with historical patch interpolation.",
+          "observedEvidence": "Fallback interpolation logic."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Model weights verified with SHA-256 integrity checksums.",
+          "observedEvidence": "Checksum verification script present."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "FastAPI async streaming endpoint for tile super-resolution.",
+          "observedEvidence": "API route implementation."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Object storage caching for pre-rendered super-resolved tiles.",
+          "observedEvidence": "Cache layer implementation."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "GitHub Actions workflow for linting and unit tests.",
+          "observedEvidence": "Workflow configuration present."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Target latency < 350ms per 256x256 tile slice.",
+          "observedEvidence": "Benchmark log on RTX GPU."
+        }
+      },
+      "relevantEvidence": [
+        "Advanced neural super-resolution architecture",
+        "Tile processing pipeline with PyTorch"
+      ],
+      "knownLimitations": [
+        "Requires GPU inference node with min. 16GB VRAM for production deployment."
+      ],
+      "currentPriority": "Quantize super-resolution model to ONNX Runtime for CPU fallback.",
+      "lastKnownEvidence": "Local model benchmark verified with ONNX runtime.",
+      "lastAuditedDate": "2026-08-25T17:00:00Z"
+    },
+    {
+      "id": "Trusted-Compliance-Agent",
+      "name": "Trusted-Compliance-Agent",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Trusted-Compliance-Agent",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Audited deterministic regulatory compliance assistant combining neural cross-encoders with strict non-hallucination verification.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Unit tests verifying semantic false-positive rejection, hash validation, and deterministic fallbacks.",
+          "observedEvidence": "Passing pytest suite in repository."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Verified execution against audited legal regulatory corpus.",
+          "observedEvidence": "Zero hallucination test harness logs."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Strict fail-closed behavior: explicit refusal when similarity threshold is under confidence boundary.",
+          "observedEvidence": "Negative boundary test cases passing."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Client PII anonymization before cross-encoder processing; zero prompt-leakage.",
+          "observedEvidence": "Security guardrails tested in CI."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Model Context Protocol (FastMCP) server and REST API endpoints.",
+          "observedEvidence": "MCP tool execution tests passing."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Qdrant vector collection with metadata filtering and SHA-256 chunk hashes.",
+          "observedEvidence": "Vector DB integration test verified."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Automated pytest and type-check workflows in GitHub Actions.",
+          "observedEvidence": "GitHub Actions green run."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "0.00% verified hallucination rate under boundary-tested regulatory queries.",
+          "observedEvidence": "Evaluation dataset results in repository."
+        }
+      },
+      "relevantEvidence": [
+        "Public GitHub repository with full source code and FastMCP implementation",
+        "Neural cross-encoder reranker (BAAI/bge-reranker-large)",
+        "Strict deterministic verification layer preventing generative confabulation"
+      ],
+      "knownLimitations": [
+        "Cross-encoder reranking adds 80-140ms latency compared to single-vector cosine retrieval."
+      ],
+      "currentPriority": "Optimize local inference using ONNX Runtime quantized models.",
+      "lastKnownEvidence": "Continuous testing in CI with 0 failures on regulatory benchmark suite.",
+      "lastAuditedDate": "2026-08-31T15:20:00Z"
+    },
+    {
+      "id": "New-Trusted-Compliance",
+      "name": "New-Trusted-Compliance",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/New-Trusted-Compliance",
+      "status": "YELLOW",
+      "evidenceLevel": "Implemented",
+      "summary": "Multi-tenant regulatory compliance framework with dynamic jurisdiction rules (GDPR, EU AI Act, HIPAA, LGPD).",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Unit tests for jurisdiction classification; cross-jurisdiction conflict tests in development.",
+          "observedEvidence": "Unit tests in repo."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Tested with simulated regulatory rule catalogs.",
+          "observedEvidence": "Test execution output."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Conflict resolution returns conservative union of all applicable restrictions.",
+          "observedEvidence": "Resolution logic verified in code."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Tenant cryptographic isolation for embeddings and vector namespaces.",
+          "observedEvidence": "Namespace isolation tests passing."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Integration hooks for enterprise document ingestion pipelines.",
+          "observedEvidence": "Adapter classes defined."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "PostgreSQL schema for audit trails and jurisdiction configurations.",
+          "observedEvidence": "Schema migrations present."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Automated workflow present in GitHub Actions.",
+          "observedEvidence": "CI configuration in repo."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Evaluated against EU AI Act high-risk classification criteria.",
+          "observedEvidence": "Compliance checklist."
+        }
+      },
+      "relevantEvidence": [
+        "Repository containing dynamic jurisdiction rule engine",
+        "Multi-tenant tenant isolation architecture"
+      ],
+      "knownLimitations": [
+        "Ongoing architectural consolidation with primary Trusted-Compliance-Agent repo."
+      ],
+      "currentPriority": "Merge jurisdiction rule engine into Trusted-Compliance-Agent v2.",
+      "lastKnownEvidence": "Jurisdiction classifier unit tests passing.",
+      "lastAuditedDate": "2026-08-24T13:45:00Z"
+    },
+    {
+      "id": "Triminds-Object-Scanner",
+      "name": "Triminds-Object-Scanner",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Object-Scanner",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Android native mobile application for on-device real-time visual inspection, object classification, and spatial bounding.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Android instrumentation tests and JUnit unit tests for camera frames and bounding box geometry.",
+          "observedEvidence": "Passing Android test suite in repository."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Executed on physical Android testing devices and emulators.",
+          "observedEvidence": "Build APK artifacts and instrumentation logs."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Low-light camera frame fallback and degraded frame rate warning notifications.",
+          "observedEvidence": "Negative light threshold handling verified."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "100% on-device local inference with zero telemetry transmission without user consent.",
+          "observedEvidence": "Android permissions audit clean."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "CameraX API integration with TensorFlow Lite / ONNX mobile inference runtime.",
+          "observedEvidence": "Model inference pipeline verified."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Room local database for offline cataloging of inspected assets.",
+          "observedEvidence": "Room database migration tests passing."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Gradle assembleDebug and linting automated via GitHub Actions.",
+          "observedEvidence": "Passing CI build badge."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Inference latency ~140ms per frame observed on mid-tier mobile hardware.",
+          "observedEvidence": "Performance benchmark charts in repo."
+        }
+      },
+      "relevantEvidence": [
+        "Public GitHub repository with Kotlin Android Native codebase",
+        "CameraX and TFLite edge inference integration",
+        "Passing Android lint and unit test suite"
+      ],
+      "knownLimitations": [
+        "Thermal throttling can reduce inference frame rate after 30 minutes continuous scanning."
+      ],
+      "currentPriority": "Implement NNAPI hardware acceleration delegate on supported chipsets.",
+      "lastKnownEvidence": "Gradle build and instrumentation tests verified in GitHub Actions.",
+      "lastAuditedDate": "2026-08-30T11:00:00Z"
+    },
+    {
+      "id": "Triminds-Object_Scanner_V2",
+      "name": "Triminds-Object_Scanner_V2",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Object_Scanner_V2",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Industrial-grade V2 scanner upgrade featuring YOLOv8 edge models, barcode/QR dual decode, and Spring Boot sync backend.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Full test coverage including backend REST sync tests and Android native camera tests.",
+          "observedEvidence": "Passing test suites for both mobile and backend modules."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Verified execution with real-time video stream in industrial warehouse pilot simulation.",
+          "observedEvidence": "Live detection metrics and test logs."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Offline store-and-forward queue with automatic sync upon network reconnection.",
+          "observedEvidence": "Network disconnect retry tests passing."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Mutual TLS and hardware keystore credential storage on mobile device.",
+          "observedEvidence": "Android Keystore implementation verified."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "REST API and WebSocket event streaming to Triminds Logistics Platform (TLP).",
+          "observedEvidence": "End-to-end integration verified with TLP."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Encrypted Room DB on edge; PostgreSQL historical database on server.",
+          "observedEvidence": "SQLCipher database encryption verified."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Continuous integration for both Android app and Spring Boot sync backend.",
+          "observedEvidence": "GitHub Actions multi-job CI workflow passing."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Mean Average Precision (mAP) > 94.8% on industrial warehouse object taxonomy.",
+          "observedEvidence": "Model evaluation dataset results in repository."
+        }
+      },
+      "relevantEvidence": [
+        "Public GitHub repository with full mobile and backend code",
+        "YOLOv8 edge model converted to ONNX/NCNN format",
+        "Offline sync engine with automatic conflict resolution"
+      ],
+      "knownLimitations": [
+        "Initial model download requires 45MB local storage on mobile device."
+      ],
+      "currentPriority": "Integrate zero-shot open vocabulary detection for unknown industrial packaging.",
+      "lastKnownEvidence": "Continuous multi-module CI build and unit test suites passing.",
+      "lastAuditedDate": "2026-09-01T10:30:00Z"
+    },
+    {
+      "id": "Triminds-VectorAI-for-Visual-Studio-Code",
+      "name": "Triminds-VectorAI-for-Visual-Studio-Code",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-VectorAI-for-Visual-Studio-Code",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Air-gapped privacy-preserving VS Code extension providing local semantic code search and pgvector indexing.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "TypeScript unit tests using VS Code extension test runner, AST parsing tests, and embedding tests.",
+          "observedEvidence": "Passing test suite in repository."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Packaged and executed as a VSIX extension across test workspaces.",
+          "observedEvidence": "VSIX package output and extension launch tests."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Graceful fallback when local embedding model runs out of memory or file is binary.",
+          "observedEvidence": "Out-of-memory and binary file tests passing."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Absolute zero telemetry or outbound network requests; verified via network sandbox.",
+          "observedEvidence": "Air-gapped network verification."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "VS Code Language Server Protocol (LSP) and QuickPick command palette integration.",
+          "observedEvidence": "Extension command registration verified."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Local pgvector container or SQLite vector extension for persistent embeddings.",
+          "observedEvidence": "Vector persistence integration verified."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "GitHub Actions workflow running npm test, ESLint, and vsce package validation.",
+          "observedEvidence": "Passing CI pipeline badge."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Query latency under 15ms for codebases up to 50,000 lines of code.",
+          "observedEvidence": "Benchmark metrics published in README."
+        }
+      },
+      "relevantEvidence": [
+        "Public GitHub repository with full TypeScript codebase",
+        "Valid package.json with vscode extension manifest and commands",
+        "Passing automated tests and verified local embedding execution"
+      ],
+      "knownLimitations": [
+        "Large repositories (> 500k LOC) require background indexing before search is available."
+      ],
+      "currentPriority": "Implement incremental file change watcher to update embeddings in real time.",
+      "lastKnownEvidence": "Extension build and test runner verified in GitHub Actions.",
+      "lastAuditedDate": "2026-08-31T17:40:00Z"
+    },
+    {
+      "id": "Triminds-Ai-cloud-Administrator",
+      "name": "Triminds-Ai-cloud-Administrator",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Ai-cloud-Administrator",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Model Context Protocol (MCP) server and CLI orchestrator for governed, secure multi-cloud administrative workflows.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Pytest suite covering all FastMCP tool handlers, CLI commands, and cloud provider adapters.",
+          "observedEvidence": "Passing pytest suite in repository."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Verified execution with real AWS, Azure, and GCP test credentials in sandboxed accounts.",
+          "observedEvidence": "CLI command execution logs and MCP tool inspection."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Safe exception handling: credentials never leaked into error messages or stack traces.",
+          "observedEvidence": "Redaction tests for exception handlers passing."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "OS-level keyring credential retrieval, zero-disk storage, strict token lifecycle management.",
+          "observedEvidence": "Keyring integration and security audits clean."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Standard FastMCP protocol server compatible with Claude Desktop, Cursor, and custom agents.",
+          "observedEvidence": "MCP protocol inspector verified."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Immutable local audit log with cryptographic hash chaining for all executed actions.",
+          "observedEvidence": "Audit log hash verification test passing."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "GitHub Actions workflow running pytests, flake8, and Docker container build.",
+          "observedEvidence": "Passing CI pipeline run."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "P95 tool execution latency under 85ms across local CLI operations.",
+          "observedEvidence": "Performance benchmark in repository."
+        }
+      },
+      "relevantEvidence": [
+        "Public GitHub repository with Python 3.11+ / FastMCP architecture",
+        "Docker container with minimal attack surface",
+        "Automated pytest test suite and CLI documentation"
+      ],
+      "knownLimitations": [
+        "OCI provider adapter requires manual OCI CLI installation on host environment."
+      ],
+      "currentPriority": "Implement multi-party approval workflows for destructive infrastructure operations.",
+      "lastKnownEvidence": "Continuous testing in CI with 100% passing tests and verified Docker packaging.",
+      "lastAuditedDate": "2026-09-02T11:15:00Z"
+    }
+  ],
+  "metadata": {
+    "baselineDate": "2026-08-01T00:00:00Z",
+    "auditVersion": "v1.4.2",
+    "evidenceDistinctionNotice": "Architecture != Implementation != Execution != Production Evidence. Only systems with verified automated test runs, logs, or live streams are classified as Executed."
+  }
+}
