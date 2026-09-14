@@ -86,7 +86,11 @@
     </script>
   </head>
   <body>
+    <script>
+      window.process = window.process || { env: {} };
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script src="/assets/js/dashboard.js" defer></script>
   </body>
 </html>

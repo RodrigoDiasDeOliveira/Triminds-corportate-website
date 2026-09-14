@@ -20,11 +20,20 @@ import {
   Clock,
   Database,
   GitBranch,
-  AlertCircle
+  AlertCircle,
+  Play,
+  Pause
 } from 'lucide-react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useEcosystemAudit } from '../hooks/useEcosystemAudit';
 import { AuditedProject, AuditHealthStatus, EvidenceLevel } from '../types/ecosystemAudit';
+import { 
+  refreshAuditDashboard, 
+  startAuditPolling, 
+  stopAuditPolling, 
+  formatRelativeTime,
+  updateEcosystemVisualState 
+} from '../services/dashboard';
 
 interface SystemTelemetryModalProps {
   isOpen: boolean;
@@ -115,6 +124,68 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [expandedProjectId, setExpandedProjectId] = useState<string | null>(null);
 
+  // Auto-polling (30s configurável com pausa/retomada) e Contador Relativo
+  const [isPolling, setIsPolling] = useState<boolean>(true);
+  const [secondsAgo, setSecondsAgo] = useState<number>(0);
+
+  // Determina o estado de saúde do ecossistema para tratamento visual (HEALTHY / DEGRADED / DOWN)
+  const healthState = useMemo<'HEALTHY' | 'DEGRADED' | 'DOWN'>(() => {
+    if (status === 'offline' || (!data && error)) {
+      return 'DOWN';
+    }
+    if (status === 'error' || (data?.summary?.projectsWithCriticalGaps ?? 0) > 0 || isCached) {
+      return 'DEGRADED';
+    }
+    return 'HEALTHY';
+  }, [status, data, error, isCached]);
+
+  // Sincroniza estado visual nos elementos DOM quando os dados ou estado mudam
+  useEffect(() => {
+    if (isOpen) {
+      updateEcosystemVisualState(
+        healthState === 'DOWN' ? 'DOWN' : healthState === 'DEGRADED' ? 'DEGRADED' : 'LIVE',
+        data
+      );
+    }
+  }, [isOpen, healthState, data]);
+
+  // Suporte a Polling automático a cada 30 segundos com opção de pausar/retomar
+  useEffect(() => {
+    if (!isOpen) return;
+
+    if (isPolling) {
+      startAuditPolling(30000);
+      const timer = setInterval(() => {
+        handleRefresh();
+      }, 30000);
+
+      return () => {
+        clearInterval(timer);
+        stopAuditPolling(false);
+      };
+    } else {
+      stopAuditPolling(true);
+    }
+  }, [isOpen, isPolling]);
+
+  // Timer de "Última atualização há X segundos" atualizado a cada 1s via JS
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const calcSeconds = () => {
+      const ts = lastUpdated ? new Date(lastUpdated).getTime() : Date.now();
+      setSecondsAgo(Math.max(0, Math.floor((Date.now() - ts) / 1000)));
+    };
+
+    calcSeconds();
+    const interval = setInterval(calcSeconds, 1000);
+    return () => clearInterval(interval);
+  }, [isOpen, lastUpdated]);
+
+  const handleTogglePolling = () => {
+    setIsPolling(prev => !prev);
+  };
+
   useEffect(() => {
     if (!isOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -151,8 +222,18 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
     });
   }, [data, filterStatus, searchQuery]);
 
-  // Early return only AFTER all hooks have executed to comply with React Rules of Hooks
-  if (!isOpen) return null;
+  const handleRefresh = async () => {
+    try {
+      await refresh();
+      if (typeof window !== 'undefined' && window.refreshAuditDashboard) {
+        await window.refreshAuditDashboard();
+      } else {
+        await refreshAuditDashboard();
+      }
+    } catch (err) {
+      console.error('Error triggering audit refresh:', err);
+    }
+  };
 
   const totalCount = data?.summary.totalProjects ?? (data?.projects?.length ?? 17);
   const greenCount = data?.summary.distribution.green ?? 11;
@@ -210,14 +291,23 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150 font-sans"
+      id="ecosystem-observability-modal"
+      className={`${isOpen ? 'fixed' : 'hidden'} inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150 font-sans`}
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-labelledby="telemetry-title"
     >
       <div 
-        className="relative w-full max-w-5xl max-h-[94vh] flex flex-col rounded-xl border border-[#D1D1CD] bg-[#F4F4F1] shadow-2xl overflow-hidden font-mono"
+        id="ecosystem-modal-container"
+        className={`relative w-full max-w-5xl max-h-[94vh] flex flex-col rounded-xl border bg-[#F4F4F1] shadow-2xl overflow-hidden font-mono transition-colors duration-200 ${
+          healthState === 'DOWN'
+            ? 'border-rose-500 ring-2 ring-rose-500/20'
+            : healthState === 'DEGRADED'
+            ? 'border-amber-500 ring-2 ring-amber-500/20'
+            : 'border-[#D1D1CD]'
+        }`}
+        data-health-state={healthState}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Top Navigation & Title Bar */}
@@ -229,21 +319,26 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
                 <h2 id="telemetry-title" className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#1A1A1A]">
                   Triminds Ecosystem Observability Dashboard
                 </h2>
-                {status === 'live' && (
-                  <span className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-300 text-[9px] font-bold tracking-tight">
-                    AUTHORITATIVE AUDIT // LIVE
-                  </span>
-                )}
-                {isCached && (
-                  <span className="px-2 py-0.5 rounded bg-amber-50 text-amber-800 border border-amber-300 text-[9px] font-bold tracking-tight flex items-center gap-1">
-                    <Clock className="w-2.5 h-2.5" /> CACHED AUDIT DATA
-                  </span>
-                )}
-                {status === 'error' && (
-                  <span className="px-2 py-0.5 rounded bg-rose-50 text-rose-800 border border-rose-300 text-[9px] font-bold tracking-tight flex items-center gap-1">
-                    <AlertTriangle className="w-2.5 h-2.5" /> SOURCE DISCONNECTED
-                  </span>
-                )}
+                <span 
+                  id="system-status-badge"
+                  role="status"
+                  aria-live="polite"
+                  aria-label={`Status do ecossistema: ${healthState}`}
+                  className={`px-2 py-0.5 rounded text-[9px] font-bold tracking-tight flex items-center gap-1 ${
+                    healthState === 'HEALTHY'
+                      ? 'bg-emerald-50 text-emerald-800 border border-emerald-300'
+                      : healthState === 'DEGRADED'
+                      ? 'bg-amber-100 text-amber-900 border border-amber-400'
+                      : 'bg-rose-100 text-rose-900 border border-rose-400'
+                  }`}
+                  data-status={healthState === 'HEALTHY' ? 'LIVE' : healthState}
+                >
+                  {healthState === 'HEALTHY' 
+                    ? 'AUTHORITATIVE AUDIT // LIVE' 
+                    : healthState === 'DEGRADED' 
+                    ? 'DEGRADED // ATTENTION REQUIRED' 
+                    : 'DOWN // SOURCE DISCONNECTED'}
+                </span>
               </div>
               <p className="text-[10px] text-[#70706B] mt-0.5">
                 Consumer & Presentation Layer for authoritative evidence from <code className="font-bold text-[#1A1A1A]">Triminds-ecosystem-audit</code>
@@ -251,20 +346,51 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center gap-2.5 self-end sm:self-auto">
-            {lastUpdated && (
-              <span className="text-[10px] text-[#70706B] font-mono hidden sm:inline">
-                Refreshed: <strong className="text-[#1A1A1A]">{new Date(lastUpdated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</strong>
-              </span>
-            )}
+          <div className="flex items-center gap-2 self-end sm:self-auto flex-wrap">
+            <span 
+              id="audit-relative-time" 
+              role="status" 
+              aria-live="polite" 
+              className="text-[10px] text-[#70706B] font-mono px-2 py-0.5 rounded bg-[#EAEAE6] border border-[#D1D1CD] hidden sm:inline"
+              data-seconds-ago={secondsAgo}
+            >
+              {formatRelativeTime(secondsAgo)}
+            </span>
+            <span className="text-[10px] text-[#70706B] font-mono hidden md:inline">
+              Refreshed: <strong id="last-audit-timestamp" role="timer" aria-live="polite" className="text-[#1A1A1A]">{lastUpdated ? new Date(lastUpdated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Initial'}</strong>
+            </span>
+            
+            {/* Botão de Polling automático configurável (30s) com pausar/retomar e ARIA */}
             <button
-              onClick={() => refresh()}
+              id="toggle-polling-btn"
+              onClick={handleTogglePolling}
+              role="button"
+              aria-pressed={isPolling}
+              aria-label={isPolling ? "Pausar atualização automática de 30s" : "Retomar atualização automática de 30s"}
+              title={isPolling ? "Pausar polling automático (30s)" : "Iniciar polling automático (30s)"}
+              className={`p-1.5 px-2 rounded-lg border transition-colors cursor-pointer flex items-center gap-1.5 text-[11px] ${
+                isPolling 
+                  ? 'border-emerald-500 text-emerald-900 bg-emerald-50/60' 
+                  : 'border-[#D1D1CD] text-[#70706B] hover:text-[#1A1A1A] hover:bg-[#F4F4F1]'
+              }`}
+            >
+              {isPolling ? <Pause className="w-3.5 h-3.5 text-emerald-600" /> : <Play className="w-3.5 h-3.5 text-[#70706B]" />}
+              <span className="polling-label inline font-medium">{isPolling ? 'Auto (30s): Ativo' : 'Auto: Pausado'}</span>
+            </button>
+
+            {/* Botão de Refresh com Retry, Loading e ARIA */}
+            <button
+              id="refresh-audit-btn"
+              onClick={handleRefresh}
               disabled={isLoading}
+              role="button"
+              aria-busy={isLoading}
+              aria-label="Atualizar telemetria de auditoria do ecossistema"
               title="Refresh authoritative audit data from Triminds-ecosystem-audit"
-              className="p-1.5 px-2.5 rounded-lg border border-[#D1D1CD] text-[#70706B] hover:text-[#1A1A1A] hover:bg-[#F4F4F1] transition-colors cursor-pointer flex items-center gap-1.5 text-[11px]"
+              className={`p-1.5 px-2.5 rounded-lg border border-[#D1D1CD] text-[#70706B] hover:text-[#1A1A1A] hover:bg-[#F4F4F1] transition-colors cursor-pointer flex items-center gap-1.5 text-[11px] ${isLoading ? 'loading' : ''}`}
             >
               <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin text-emerald-600' : ''}`} />
-              <span className="inline">{isLoading ? 'Refreshing...' : 'Refresh Audit'}</span>
+              <span className="btn-label inline">{isLoading ? 'Refreshing...' : 'Refresh Audit'}</span>
             </button>
 
             <button
@@ -275,6 +401,37 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
               <X className="w-5 h-5" />
             </button>
           </div>
+        </div>
+
+        {/* Alerta em destaque para status DEGRADED ou DOWN */}
+        <div
+          id="ecosystem-status-alert"
+          role="alert"
+          aria-live={healthState === 'DOWN' ? 'assertive' : 'polite'}
+          className={`px-5 sm:px-6 py-2.5 border-b text-xs flex items-center justify-between gap-3 ${
+            healthState === 'DOWN'
+              ? 'bg-rose-50 border-rose-300 text-rose-900'
+              : healthState === 'DEGRADED'
+              ? 'bg-amber-50 border-amber-300 text-amber-900'
+              : 'hidden'
+          }`}
+        >
+          <div className="flex items-center gap-2">
+            {healthState === 'DOWN' ? (
+              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
+            )}
+            <span>
+              <strong className="uppercase tracking-wide">{healthState === 'DOWN' ? 'ALERTA CRÍTICO:' : 'AVISO DE DEGRADAÇÃO:'}</strong>{' '}
+              {healthState === 'DOWN'
+                ? 'Ecossistema em estado DOWN / OFFLINE. Telemetria autoritativa desconectada ou falha severa.'
+                : 'Ecossistema em estado DEGRADED. Detectadas instabilidades ou gaps de conformidade em resolução.'}
+            </span>
+          </div>
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded border uppercase shrink-0 bg-white/70">
+            {healthState}
+          </span>
         </div>
 
         {/* Tab Selection Bar */}
@@ -360,12 +517,12 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
 
               {/* Ecosystem Overview Cards (6 Metrics) */}
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
-                <div className="p-3 rounded-lg bg-white border border-[#D1D1CD] space-y-1">
+                <div id="card-total-repos" className="p-3 rounded-lg bg-white border border-[#D1D1CD] space-y-1">
                   <div className="text-[10px] text-[#70706B] uppercase">Total Audited</div>
-                  <div className="text-lg font-bold text-[#1A1A1A]">
+                  <div className="text-lg font-bold text-[#1A1A1A] metric-value">
                     {totalCount}
                   </div>
-                  <div className="text-[9px] text-[#70706B]">{totalCount} Unique Repos</div>
+                  <div className="text-[9px] text-[#70706B] metric-desc">{totalCount} Unique Repos</div>
                 </div>
 
                 <div className="p-3 rounded-lg bg-white border border-[#D1D1CD] space-y-1">
@@ -387,21 +544,21 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
                   <div className="text-[9px] text-emerald-800 font-bold">Verified Test Runs</div>
                 </div>
 
-                <div className="p-3 rounded-lg bg-white border border-[#D1D1CD] space-y-1">
+                <div id="card-pipeline-rate" className="p-3 rounded-lg bg-white border border-[#D1D1CD] space-y-1">
                   <div className="text-[10px] text-[#70706B] uppercase">CI Observed</div>
-                  <div className="text-lg font-bold text-[#1A1A1A]">
+                  <div className="text-lg font-bold text-[#1A1A1A] metric-value">
                     {ciObservedCount}
                     <span className="text-xs text-[#70706B] font-normal"> / {totalCount}</span>
                   </div>
-                  <div className="text-[9px] text-[#70706B]">Actions Pipelines</div>
+                  <div className="text-[9px] text-[#70706B] metric-desc">Actions Pipelines</div>
                 </div>
 
-                <div className="p-3 rounded-lg bg-white border border-[#D1D1CD] space-y-1">
+                <div id="card-security" className="p-3 rounded-lg bg-white border border-[#D1D1CD] space-y-1">
                   <div className="text-[10px] text-[#70706B] uppercase">Flagged Gaps</div>
-                  <div className="text-lg font-bold text-rose-700">
+                  <div className="text-lg font-bold text-rose-700 metric-value">
                     {criticalGapsCount}
                   </div>
-                  <div className="text-[9px] text-rose-800 font-bold">Cross-Repo CI</div>
+                  <div className="text-[9px] text-rose-800 font-bold metric-desc">Cross-Repo CI</div>
                 </div>
 
                 <div className="p-3 rounded-lg bg-white border border-[#D1D1CD] space-y-1">
@@ -450,6 +607,45 @@ export const SystemTelemetryModal: React.FC<SystemTelemetryModalProps> = ({
                       {f.label}
                     </button>
                   ))}
+                </div>
+              </div>
+
+              {/* Authoritative Audit Log Feed Table */}
+              <div className="rounded-lg bg-white border border-[#D1D1CD] overflow-hidden shadow-xs">
+                <div className="p-3 border-b border-[#D1D1CD] flex items-center justify-between bg-[#FAF9F6]">
+                  <div className="flex items-center gap-2">
+                    <Activity className="w-3.5 h-3.5 text-emerald-600" />
+                    <span className="font-bold text-[11px] text-[#1A1A1A] uppercase tracking-wide">
+                      Authoritative Audit Log & Verifications Feed
+                    </span>
+                  </div>
+                  <span className="text-[10px] text-[#70706B] font-mono">
+                    {filteredProjects.length} Systems Audited
+                  </span>
+                </div>
+                <div className="overflow-x-auto max-h-56">
+                  <table className="w-full text-left border-collapse">
+                    <thead className="bg-[#F4F4F1] border-b border-[#D1D1CD] text-[10px] text-[#70706B] uppercase font-bold sticky top-0">
+                      <tr>
+                        <th className="p-2.5">Repository / System</th>
+                        <th className="p-2.5">Status</th>
+                        <th className="p-2.5">Pipeline Rate</th>
+                        <th className="p-2.5">Security & Evidence</th>
+                        <th className="p-2.5">Last Audited</th>
+                      </tr>
+                    </thead>
+                    <tbody id="audit-log-table-body">
+                      {filteredProjects.map((p) => (
+                        <tr key={p.id} className="border-b border-[#EAEAE6] hover:bg-[#FAF9F6] transition-colors text-xs font-mono">
+                          <td className="p-2.5 font-bold text-[#1A1A1A]">{p.name}</td>
+                          <td className="p-2.5">{getStatusBadge(p.status)}</td>
+                          <td className="p-2.5 text-[#4A4A45]">{p.dimensions.ciEnforcement.status === 'GREEN' ? '100% (Actions CI)' : 'Pending CI'}</td>
+                          <td className="p-2.5 text-[#4A4A45]">{getEvidenceBadge(p.evidenceLevel)}</td>
+                          <td className="p-2.5 text-[#70706B] text-[11px]">{new Date(p.lastAuditedDate).toLocaleDateString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
 
