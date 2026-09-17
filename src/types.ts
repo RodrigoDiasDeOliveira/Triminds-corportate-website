@@ -15,10 +15,17 @@ export type ProjectCategory =
   | 'what-is-planned';
 
 export type TruthStatus = 
-  | 'implemented'  // ✅ Existe e está implementado
-  | 'partial'      // 🟡 Existe parcialmente/experimentalmente
-  | 'planned'      // 🔵 Está planejado
-  | 'not-present'; // ❌ Não existe
+  | 'implemented'
+  | 'partial'
+  | 'planned'
+  | 'not-present';
+
+export type DeploymentStatus =
+  | 'production'
+  | 'deployed'
+  | 'validated'
+  | 'not-deployed'
+  | 'unknown';
 
 export interface RealTechnologyStack {
   languages: string[];
@@ -58,7 +65,10 @@ export interface CaseStudy {
   sector: string;
   category: ProjectCategory;
   truthStatus: TruthStatus;
-  honestScope: string; // "Designed for..." instead of "Runs at..." where applicable
+  deploymentStatus?: DeploymentStatus;
+  evidenceSource?: string;
+  lastVerified?: string;
+  honestScope: string;
   whatItProves: string;
   problem: string;
   context: string;
@@ -71,7 +81,7 @@ export interface CaseStudy {
   realTechnologies: RealTechnologyStack;
   repository: ProjectRepositoryInfo;
   engineering: string[];
-  technology: string[]; // High-level tags
+  technology: string[];
   evolution: string;
   challenges: string[];
   decisions: {
