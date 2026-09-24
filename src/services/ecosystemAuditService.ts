@@ -1,7 +1,7 @@
 import { EcosystemSnapshot, AuditServiceState, AuditedProject } from '../types/ecosystemAudit';
 
-const CACHE_KEY = 'triminds_ecosystem_audit_cache_v1';
-const CACHE_TIMESTAMP_KEY = 'triminds_ecosystem_audit_timestamp_v1';
+const CACHE_KEY = 'triminds_ecosystem_audit_cache_v2';
+const CACHE_TIMESTAMP_KEY = 'triminds_ecosystem_audit_timestamp_v2';
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes cache TTL
 
 /**
