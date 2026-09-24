@@ -34,17 +34,17 @@ describe('Triminds Ecosystem Audit Integration Suite (Section 10 Requirements)',
   // Test 1: Carregamento válido dos dados
   test('1. Valid data loading: parses and validates schema from authoritative snapshot', () => {
     assert.equal(validateEcosystemSnapshot(sampleSnapshot), true);
-    assert.equal(sampleSnapshot.schemaVersion, '1.0.0');
+    assert.equal(sampleSnapshot.schemaVersion, '1.1.0');
     assert.equal(sampleSnapshot.source, 'Triminds-ecosystem-audit');
-    assert.equal(sampleSnapshot.projects.length, 17);
+    assert.equal(sampleSnapshot.projects.length, 19);
   });
 
   // Test 2: Rendering do overview
   test('2. Overview rendering: summary metrics are mathematically consistent with 17 projects', () => {
     const summary = sampleSnapshot.summary;
-    assert.equal(summary.totalProjects, 17);
+    assert.equal(summary.totalProjects, 19);
     assert.equal(summary.totalProjects, sampleSnapshot.projects.length);
-    assert.equal(summary.distribution.green + summary.distribution.yellow + summary.distribution.red, 17);
+    assert.equal(summary.distribution.green + summary.distribution.yellow + summary.distribution.red, 19);
     assert.ok(summary.projectsWithExecutionEvidence > 0);
     assert.ok(summary.projectsWithCiObserved > 0);
     assert.equal(summary.projectsWithCriticalGaps, 0);
@@ -75,7 +75,7 @@ describe('Triminds Ecosystem Audit Integration Suite (Section 10 Requirements)',
   });
 
   // Test 4: Estados GREEN/YELLOW/RED
-  test('4. GREEN/YELLOW/RED states: semantically consistent distribution across all 17 systems', () => {
+  test('4. GREEN/YELLOW/RED states: semantically consistent distribution across all 19 systems', () => {
     const greenProjects = sampleSnapshot.projects.filter(p => p.status === 'GREEN');
     const yellowProjects = sampleSnapshot.projects.filter(p => p.status === 'YELLOW');
     const redProjects = sampleSnapshot.projects.filter(p => p.status === 'RED');
@@ -149,9 +149,9 @@ describe('Triminds Ecosystem Audit Integration Suite (Section 10 Requirements)',
     assert.equal(validateEcosystemSnapshot(null), false);
     assert.equal(validateEcosystemSnapshot({}), false);
     assert.equal(validateEcosystemSnapshot({ schemaVersion: '2.0.0' }), false);
-    assert.equal(validateEcosystemSnapshot({ schemaVersion: '1.0.0', projects: [] }), false);
+    assert.equal(validateEcosystemSnapshot({ schemaVersion: '1.1.0', projects: [] }), false);
     assert.equal(validateEcosystemSnapshot({
-      schemaVersion: '1.0.0',
+      schemaVersion: '1.1.0',
       summary: {},
       projects: [{ id: 'test', name: 'test', status: 'UNKNOWN' }]
     }), false);
@@ -166,7 +166,7 @@ describe('Triminds Ecosystem Audit Integration Suite (Section 10 Requirements)',
     const cached = getCachedSnapshot();
 
     assert.ok(cached, 'Cached snapshot must be retrieved');
-    assert.equal(cached.snapshot.projects.length, 17);
+    assert.equal(cached.snapshot.projects.length, 19);
     assert.ok(cached.cachedAt, 'Cache must include valid timestamp');
   });
 
@@ -211,7 +211,7 @@ describe('Triminds Ecosystem Audit Integration Suite (Section 10 Requirements)',
     const originalFetch = globalThis.fetch;
     globalThis.fetch = async () => ({
       ok: true,
-      json: async () => ({ schemaVersion: '1.0.0', summary: {}, projects: [] })
+      json: async () => ({ schemaVersion: '1.1.0', summary: {}, projects: [] })
     } as any);
 
     try {
