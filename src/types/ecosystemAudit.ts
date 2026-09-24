@@ -63,7 +63,7 @@ export interface EcosystemOverviewSummary {
 }
 
 export interface EcosystemSnapshot {
-  schemaVersion: '1.0.0';
+  schemaVersion: '1.1.0';
   generatedAt: string;
   source: 'Triminds-ecosystem-audit';
   methodology: string;
