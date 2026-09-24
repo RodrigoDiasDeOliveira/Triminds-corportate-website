@@ -1,21 +1,21 @@
 {
-  "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-09T12:00:00Z",
+  "schemaVersion": "1.1.0",
+  "generatedAt": "2026-09-24T09:00:00Z",
   "source": "Triminds-ecosystem-audit",
   "methodology": "Dual-Tier Repository Audit (Code Analysis, CI/CD Inspection, Test Suite Verification, ADR Mapping, Vulnerability Triage)",
   "executionMode": "ci",
   "summary": {
-    "totalProjects": 17,
+    "totalProjects": 19,
     "distribution": {
-      "green": 11,
-      "yellow": 6,
+      "green": 12,
+      "yellow": 7,
       "red": 0
     },
-    "maturityScore": "Consolidating (11 Sustained, 6 In Progress, 0 Flagged Gaps)",
-    "projectsWithExecutionEvidence": 11,
-    "projectsWithCiObserved": 17,
+    "maturityScore": "Consolidating (12 Sustained, 7 In Progress, 0 Flagged Gaps)",
+    "projectsWithExecutionEvidence": 13,
+    "projectsWithCiObserved": 18,
     "projectsWithCriticalGaps": 0,
-    "lastAuditRun": "2026-09-09T12:00:00Z"
+    "lastAuditRun": "2026-09-24T09:00:00Z"
   },
   "projects": [
     {
@@ -941,9 +941,9 @@
       "id": "New-Trusted-Compliance",
       "name": "New-Trusted-Compliance",
       "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/New-Trusted-Compliance",
-      "status": "YELLOW",
-      "evidenceLevel": "Implemented",
-      "summary": "Multi-tenant regulatory compliance framework with dynamic jurisdiction rules (GDPR, EU AI Act, HIPAA, LGPD).",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Current Trusted Compliance product with deterministic retrieval, pgvector/HNSW, CrossEncoder reranking, fail-closed abstention and verified GCE production deployment.",
       "dimensions": {
         "testSurface": {
           "name": "Test Surface",
@@ -954,10 +954,10 @@
         },
         "executionEvidence": {
           "name": "Execution Evidence",
-          "status": "YELLOW",
-          "evidenceLevel": "Implemented",
-          "details": "Tested with simulated regulatory rule catalogs.",
-          "observedEvidence": "Test execution output."
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "CI regression evidence plus verified production runtime on Google Compute Engine.",
+          "observedEvidence": "CI run 34362471001 passed; production validation on 2026-09-17 confirmed HTTPS frontend, Nginx/TLS, FastAPI health 200 and three Docker containers running."
         },
         "failurePaths": {
           "name": "Failure Paths",
@@ -982,10 +982,10 @@
         },
         "persistence": {
           "name": "Persistence",
-          "status": "YELLOW",
-          "evidenceLevel": "Implemented",
-          "details": "PostgreSQL schema for audit trails and jurisdiction configurations.",
-          "observedEvidence": "Schema migrations present."
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "PostgreSQL/pgvector persistence validated in CI and deployed in the production VM runtime.",
+          "observedEvidence": "Real pgvector regression path in CI plus running PostgreSQL container in production validation."
         },
         "ciEnforcement": {
           "name": "CI Enforcement",
@@ -996,22 +996,24 @@
         },
         "operationalEvidence": {
           "name": "Operational Evidence",
-          "status": "YELLOW",
-          "evidenceLevel": "Implemented",
-          "details": "Evaluated against EU AI Act high-risk classification criteria.",
-          "observedEvidence": "Compliance checklist."
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Point-in-time production evidence is now available; sustained availability and capacity remain unproven.",
+          "observedEvidence": "Public HTTPS frontend returned HTTP 200; /api/health returned HTTP 200 and ~95 ms through the public path; three containers observed running."
         }
       },
       "relevantEvidence": [
-        "Repository containing dynamic jurisdiction rule engine",
-        "Multi-tenant tenant isolation architecture"
+        "61 recorded workflow runs with current CI evidence",
+        "Real PostgreSQL/pgvector recovery regression and CrossEncoder abstention validation",
+        "GCE production deployment with Docker, Nginx, TLS and public health verification"
       ],
       "knownLimitations": [
-        "Ongoing architectural consolidation with primary Trusted-Compliance-Agent repo."
+        "Point-in-time production validation is not a capacity benchmark or sustained availability measurement.",
+        "Automated backup/restore, renewal verification and rollback procedures remain follow-up items."
       ],
-      "currentPriority": "Merge jurisdiction rule engine into Trusted-Compliance-Agent v2.",
-      "lastKnownEvidence": "Jurisdiction classifier unit tests passing.",
-      "lastAuditedDate": "2026-08-24T13:45:00Z"
+      "currentPriority": "Persist production deployment corrections in source-controlled build configuration and add runtime latency/telemetry evidence.",
+      "lastKnownEvidence": "2026-09-17 GCE production validation: HTTPS 200, /api/health 200, three Docker containers running.",
+      "lastAuditedDate": "2026-09-17T00:00:00Z"
     },
     {
       "id": "Triminds-Object-Scanner",
@@ -1320,6 +1322,160 @@
       "currentPriority": "Implement multi-party approval workflows for destructive infrastructure operations.",
       "lastKnownEvidence": "Continuous testing in CI with 100% passing tests and verified Docker packaging.",
       "lastAuditedDate": "2026-09-02T11:15:00Z"
+    },
+    {
+      "id": "Triminds-Security-Plataform-v3",
+      "name": "Triminds-Security-Plataform-v3",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Security-Plataform-v3",
+      "status": "YELLOW",
+      "evidenceLevel": "Executed",
+      "summary": "Current Zero Trust security platform generation with Organization context, optional Tenant isolation, OPA policy enforcement, Kafka/Redis invalidation and multi-module Spring Boot architecture.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Extensive unit and integration validation across the security modules.",
+          "observedEvidence": "102 test files recorded in the current audit baseline; Maven validation passed."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Current generation validated through CI and production-readiness test suites.",
+          "observedEvidence": "CI #89 / run 35705442772 passed Maven and frontend validation; 9/9 Maven modules passed in the latest verification cycle."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Fail-closed behavior and adversarial security paths are explicitly validated.",
+          "observedEvidence": "Adversarial JWT/security validation suites approved."
+        },
+        "security": {
+          "name": "Security",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Zero Trust boundary with OPA, JWT/JWKS, organization context and server-side identity resolution.",
+          "observedEvidence": "Security and adversarial validation passed."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Gateway, identity, access-control, policy, risk and audit modules validated as a coherent platform.",
+          "observedEvidence": "Multi-module Maven build and integration validation passed."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Organization, Tenant and Identity persistence with referential integrity and migration backfill.",
+          "observedEvidence": "V5/V6 migration and constraint validation recorded in audit."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Blocking CI validation for backend and frontend.",
+          "observedEvidence": "CI #89 / run 35705442772 passed."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Architecture and validation evidence are strong, but sustained production runtime has not yet been demonstrated.",
+          "observedEvidence": "Production-readiness validation complete; live sustained deployment remains pending."
+        }
+      },
+      "relevantEvidence": [
+        "Current Organization/Tenant/Identity context model",
+        "OPA fail-closed policy path with Kafka cache invalidation",
+        "9/9 Maven modules passing latest verification"
+      ],
+      "knownLimitations": [
+        "Sustained production runtime, rollback and long-running operational telemetry remain to be demonstrated."
+      ],
+      "currentPriority": "Move from validated production candidate to sustained runtime evidence without weakening fail-closed security boundaries.",
+      "lastKnownEvidence": "2026-09-22 CI #89 plus latest 9/9 Maven verification.",
+      "lastAuditedDate": "2026-09-22T00:00:00Z"
+    },
+    {
+      "id": "Triminds-Technology-Portfolio",
+      "name": "Triminds-Technology-Portfolio",
+      "repositoryUrl": "https://github.com/RodrigoDiasDeOliveira/Triminds-Technology-Portfolio",
+      "status": "GREEN",
+      "evidenceLevel": "Executed",
+      "summary": "Governance layer maintaining the unified technology asset register and separating technical maturity, product readiness, strategic value and production gaps.",
+      "dimensions": {
+        "testSurface": {
+          "name": "Test Surface",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Governance artifact rather than runtime software.",
+          "observedEvidence": "Structured portfolio records and ADR lineage."
+        },
+        "executionEvidence": {
+          "name": "Execution Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Portfolio data is used as the current audit/governance baseline.",
+          "observedEvidence": "Current 18-asset inventory and maturity/readiness distinctions recorded."
+        },
+        "failurePaths": {
+          "name": "Failure Paths",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Governance failure modes are handled through explicit evidence/limitations fields.",
+          "observedEvidence": "Audit model distinguishes missing evidence from private repositories."
+        },
+        "security": {
+          "name": "Security",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Governance layer records security posture rather than enforcing runtime controls.",
+          "observedEvidence": "Security maturity is tracked per asset."
+        },
+        "integration": {
+          "name": "Integration",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Acts as a portfolio-level source for audit and ecosystem representation.",
+          "observedEvidence": "Current audit inventory consumed by ecosystem reporting."
+        },
+        "persistence": {
+          "name": "Persistence",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Repository-backed governance records.",
+          "observedEvidence": "Version-controlled portfolio data."
+        },
+        "ciEnforcement": {
+          "name": "CI Enforcement",
+          "status": "YELLOW",
+          "evidenceLevel": "Implemented",
+          "details": "Governance repository is not itself a software runtime.",
+          "observedEvidence": "No runtime CI requirement established."
+        },
+        "operationalEvidence": {
+          "name": "Operational Evidence",
+          "status": "GREEN",
+          "evidenceLevel": "Executed",
+          "details": "Provides current evidence references and maturity distinctions for the ecosystem.",
+          "observedEvidence": "Latest audit data includes current private generations and production evidence."
+        }
+      },
+      "relevantEvidence": [
+        "Unified asset register",
+        "Maturity/readiness separation",
+        "Current evidence references"
+      ],
+      "knownLimitations": [
+        "Governance evidence does not substitute for runtime production evidence in individual products."
+      ],
+      "currentPriority": "Keep portfolio state synchronized with ecosystem audit and public-facing evidence.",
+      "lastKnownEvidence": "2026-09-24 current audit synchronization.",
+      "lastAuditedDate": "2026-09-24T09:00:00Z"
     }
   ],
   "metadata": {
