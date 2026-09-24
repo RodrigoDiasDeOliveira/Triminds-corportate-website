@@ -9,7 +9,7 @@ const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes cache TTL
  */
 export function validateEcosystemSnapshot(raw: any): raw is EcosystemSnapshot {
   if (!raw || typeof raw !== 'object') return false;
-  if (raw.schemaVersion !== '1.0.0') return false;
+  if (raw.schemaVersion !== '1.1.0') return false;
   if (!raw.summary || typeof raw.summary !== 'object') return false;
   if (!Array.isArray(raw.projects)) return false;
   if (raw.projects.length === 0) return false;
