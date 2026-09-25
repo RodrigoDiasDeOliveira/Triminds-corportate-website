@@ -6,6 +6,8 @@ export const ContactSection: React.FC = () => {
   const { t, language } = useLanguage();
   const [copied, setCopied] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -52,7 +54,8 @@ export const ContactSection: React.FC = () => {
       placeholder: 'Tell us briefly what you would like to discuss...',
       submit: 'Send Request',
       success: 'Request prepared',
-      successDesc: 'Your message has been prepared for contato@trimindslabs.com. Your email client will open so you can send it.',
+      successDesc: 'Your message was sent successfully to the Triminds team.',
+      error: 'We could not send your request. Please try again or use the direct email address.',
     },
     pt: {
       subject: 'Assunto ou sistema',
@@ -60,7 +63,8 @@ export const ContactSection: React.FC = () => {
       placeholder: 'Descreva brevemente o que gostaria de tratar...',
       submit: 'Enviar solicitação',
       success: 'Solicitação preparada',
-      successDesc: 'Sua mensagem foi preparada para contato@trimindslabs.com. Seu cliente de e-mail será aberto para que você possa enviá-la.',
+      successDesc: 'Sua mensagem foi enviada com sucesso para a equipe Triminds.',
+      error: 'Não foi possível enviar sua solicitação. Tente novamente ou use o endereço de e-mail direto.',
     },
     es: {
       subject: 'Asunto o sistema',
@@ -68,7 +72,8 @@ export const ContactSection: React.FC = () => {
       placeholder: 'Describa brevemente lo que desea tratar...',
       submit: 'Enviar solicitud',
       success: 'Solicitud preparada',
-      successDesc: 'Su mensaje ha sido preparado para contato@trimindslabs.com. Se abrirá su cliente de correo para que pueda enviarlo.',
+      successDesc: 'Su mensaje se ha enviado correctamente al equipo de Triminds.',
+      error: 'No se pudo enviar su solicitud. Inténtelo de nuevo o utilice la dirección de correo directo.',
     },
   }[language] ?? {
     subject: 'Subject or system',
@@ -76,7 +81,8 @@ export const ContactSection: React.FC = () => {
     placeholder: 'Tell us briefly what you would like to discuss...',
     submit: 'Send Request',
     success: 'Request prepared',
-    successDesc: 'Your message has been prepared for contato@trimindslabs.com. Your email client will open so you can send it.',
+    successDesc: 'Your message was sent successfully to the Triminds team.',
+    error: 'We could not send your request. Please try again or use the direct email address.',
   };
 
   const handleCopyEmail = () => {
@@ -85,25 +91,40 @@ export const ContactSection: React.FC = () => {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  const getMailtoHref = () => {
-    const subject = encodeURIComponent(`[Triminds] ${formData.domain}`);
-    const body = encodeURIComponent(
-`Name: ${formData.name || 'Not specified'}
-Email: ${formData.email || 'Not specified'}
-Organization: ${formData.company || 'Not specified'}
-Subject/System: ${formData.domain}
-
-Message:
-${formData.message || 'No message provided.'}`
-    );
-    return `mailto:contato@trimindslabs.com?subject=${subject}&body=${body}`;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    // Use the browser's mail handler directly. Do not open a new tab/window.
-    window.location.href = getMailtoHref();
+    setSubmitting(true);
+    setSubmitError(false);
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/contato@trimindslabs.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          subject: formData.domain,
+          message: formData.message,
+          _subject: `[Triminds] ${formData.domain}`,
+          _template: 'table',
+          _url: window.location.href,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Form submission failed');
+      }
+
+      setSubmitted(true);
+    } catch {
+      setSubmitError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -226,9 +247,10 @@ ${formData.message || 'No message provided.'}`
                   <label htmlFor="gdpr" className="text-[#70706B] text-[11px] cursor-pointer">{t('contact.gdprConsent')}</label>
                 </div>
 
-                <button type="submit" className="w-full py-3 rounded text-xs font-mono font-semibold bg-[#1A1A1A] hover:bg-black text-white transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs">
+                {submitError && <p role="alert" className="text-[11px] text-red-700 font-mono">{contactLabels.error}</p>}
+                <button type="submit" disabled={submitting} className="w-full py-3 rounded text-xs font-mono font-semibold bg-[#1A1A1A] hover:bg-black disabled:opacity-60 disabled:cursor-not-allowed text-white transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs">
                   <Send className="w-3.5 h-3.5" />
-                  <span>{contactLabels.submit}</span>
+                  <span>{submitting ? 'Sending...' : contactLabels.submit}</span>
                 </button>
               </form>
             )}
