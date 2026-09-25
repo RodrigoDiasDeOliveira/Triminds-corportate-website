@@ -13,7 +13,6 @@ import {
   ShieldCheck,
   Code2,
   Globe,
-  CheckCircle2,
   Award
 } from 'lucide-react';
 import { NavigationTab, Language } from '../types';
@@ -71,11 +70,11 @@ export const Header: React.FC<HeaderProps> = ({
             {t('ticker.systemsNominal')}
           </span>
           <span className="text-[#D1D1CD]">|</span>
-          <span>{t('ticker.p99Latency')}: <strong className="text-[#1A1A1A] font-semibold">&lt; 145ms</strong></span>
+          <span>Evidence-first engineering</span>
           <span className="text-[#D1D1CD]">|</span>
-          <span>{t('ticker.guardrail')}: <strong className="text-[#1A1A1A] font-semibold">{t('nav.zeroHallucination')}</strong></span>
+          <span>Production status is system-specific</span>
           <span className="text-[#D1D1CD]">|</span>
-          <span>{t('ticker.dataResidency')}: <strong className="text-[#1A1A1A] font-semibold">{t('nav.euSovereign')}</strong></span>
+          <span>Cloud / data jurisdiction qualified per system</span>
         </div>
 
         <div className="flex items-center gap-4">
