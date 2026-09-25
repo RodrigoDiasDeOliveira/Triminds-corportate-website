@@ -15,7 +15,7 @@ import { ProductionGatesModal } from './components/ProductionGatesModal';
 import { GdprBanner } from './components/GdprBanner';
 import { ArchitectureViewer } from './components/ArchitectureViewer';
 import { NavigationTab } from './types';
-import { ArrowRight, ShieldCheck, Award } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
 import { getEvidenceCaseStudies } from './data/caseStudyEvidence';
 import { LanguageProvider, useLanguage } from './i18n/LanguageContext';
 
@@ -40,7 +40,6 @@ function AppContent() {
         onNavigate={handleNavigate}
         onOpenTelemetry={() => setTelemetryOpen(true)}
         onOpenVocabulary={() => setVocabularyOpen(true)}
-        onOpenGates={() => setGatesOpen(true)}
       />
 
       <ObservabilityTicker onOpenTelemetry={() => setTelemetryOpen(true)} />
@@ -163,13 +162,6 @@ function AppContent() {
                   >
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                     <span>{t('callout.viewEvidence')}</span>
-                  </button>
-                  <button
-                    onClick={() => setGatesOpen(true)}
-                    className="px-5 py-2.5 rounded text-xs font-mono font-semibold bg-emerald-50 text-emerald-900 border border-emerald-300 hover:bg-emerald-100 transition-all cursor-pointer flex items-center gap-1.5"
-                  >
-                    <Award className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Production Gates — Evidence Status</span>
                   </button>
                   <button
                     onClick={() => handleNavigate('contact')}
