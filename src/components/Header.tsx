@@ -188,14 +188,6 @@ export const Header: React.FC<HeaderProps> = ({
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
               <span>{t('nav.auditMatrixBtn')}</span>
             </button>
-
-            <button
-              onClick={() => onNavigate('contact')}
-              className="px-3.5 py-1.5 rounded-md bg-[#1A1A1A] text-white text-xs font-mono font-medium hover:bg-black transition-all flex items-center gap-1.5 shadow-xs cursor-pointer"
-            >
-              <Mail className="w-3.5 h-3.5" />
-              <span>{t('nav.contact')}</span>
-            </button>
           </div>
 
           {/* Mobile Menu Trigger */}
@@ -287,14 +279,6 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Code2 className="w-4 h-4" />
               <span>{t('nav.vocabularyBtn')}</span>
-            </button>
-
-            <button
-              onClick={() => handleNavClick('contact')}
-              className="w-full flex items-center justify-center gap-2 p-3 rounded-lg bg-[#1A1A1A] text-white text-xs font-mono font-semibold"
-            >
-              <Mail className="w-4 h-4" />
-              <span>{t('nav.contact')}</span>
             </button>
           </div>
         </div>
