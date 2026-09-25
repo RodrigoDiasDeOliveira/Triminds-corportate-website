@@ -1,179 +1,186 @@
 import { AISystem } from '../types';
 
+/**
+ * Architectural system patterns presented on the public site.
+ *
+ * Important: this catalogue intentionally avoids deployment-wide SLAs and
+ * infrastructure claims that belong to individual repositories/case studies.
+ * Current implementation and deployment evidence is presented in Projects.
+ */
 export const AI_SYSTEMS: AISystem[] = [
   {
     id: "trusted-search",
     name: "Trusted Search Core",
-    headline: "Hybrid Deterministic Retrieval & Cross-Encoder Neural Reranking",
-    description: "An enterprise search infrastructure engineered to eradicate semantic false positives. Merges inverted-index lexical precision with high-dimensional vector embeddings, filtered through deep cross-attention rerankers and cryptographic citation hashing.",
+    headline: "Evidence-first retrieval architecture for compliance and enterprise knowledge",
+    description: "A retrieval architecture centered on explicit evidence boundaries: deterministic answers where the available data permits them, semantic retrieval when needed, and validated fallback generation rather than treating generation as the default.",
     keyCapabilities: [
-      "Reciprocal Rank Fusion (BM25 + Dense Vectors)",
-      "Cross-Encoder Neural Reranking (BGE-Reranker-Large)",
-      "Character-Offset Source Attribution & Token Hashing",
-      "Dynamic Metadata Filtering & Multilingual Partitioning"
+      "Deterministic trusted-answer path",
+      "Semantic retrieval with PostgreSQL + pgvector",
+      "Explicit separation between evidence and generative fallback",
+      "Repository-level provenance and validation"
     ],
     technicalSpecs: {
-      latency: "p95 < 145ms across 10M vectors",
-      reliability: "99.99% retrieval uptime SLO",
-      dataResidency: "Sovereign EU Cloud Enclave",
-      guardrailType: "Strict Provenance & Confidence Gate"
+      latency: "Not stated as a global SLA",
+      reliability: "Evidence status is system-specific",
+      dataResidency: "Qualified per deployment and data source",
+      guardrailType: "Evidence boundary + explicit fallback state"
     },
     architecturalFlow: [
       {
         step: 1,
-        title: "Query Analysis & Expansion",
-        description: "Decomposes input query into semantic intents, lexical tokens, and metadata constraints.",
-        technology: "Intent Tokenizer & Sparse Encoder"
+        title: "Evidence & Query Intake",
+        description: "Accepts the user request and determines whether the available corpus can support a trusted answer.",
+        technology: "Application validation + structured data access"
       },
       {
         step: 2,
-        title: "Dual-Path Candidate Retrieval",
-        description: "Parallel execution across inverted lexical indexes (BM25) and HNSW dense vector space.",
-        technology: "Qdrant Vector DB + Elasticsearch"
+        title: "Deterministic Answer Path",
+        description: "Uses structured or trusted evidence directly when the requested fact can be established without generative inference.",
+        technology: "PostgreSQL / application domain logic"
       },
       {
         step: 3,
-        title: "Cross-Encoder Rescoring",
-        description: "Full cross-attention scoring across top 50 candidates, eliminating semantic decoys.",
-        technology: "Transformer Cross-Encoder (FP16)"
+        title: "Semantic Retrieval",
+        description: "Uses semantic retrieval when deterministic evidence is insufficient, keeping the fallback path explicit rather than implicit.",
+        technology: "pgvector + sentence-transformers"
       },
       {
         step: 4,
-        title: "Factual Provenance Verification",
-        description: "Validates citation spans against immutable primary document hashes.",
-        technology: "SHA-256 Block Attestation Service"
+        title: "Validated Fallback",
+        description: "Generative assistance remains a qualified fallback and is not presented as equivalent to directly verified evidence.",
+        technology: "LangChain + Pydantic validation"
       }
     ]
   },
   {
     id: "agentic-systems",
-    name: "Deterministic / Controlled Agentic Workflow",
-    headline: "Controlled Dual-Pass Agentic Verification Pipeline with Character-Offset Provenance",
-    description: "Conceived and implemented within the Trusted Compliance Agent (https://github.com/RodrigoDiasDeOliveira/Trusted-Compliance-Agent). Replaces unpredictable stochastic agent loops with a deterministic, dual-pass verification workflow that enforces exact character-level citation provenance, Pydantic V2 schema contracts, and fail-closed validation gates.",
+    name: "Controlled Agentic Workflow",
+    headline: "Constrained AI workflows with explicit validation boundaries",
+    description: "A controlled agentic pattern developed around the Trusted Compliance Agent. The workflow separates retrieval, reasoning and validation so that an agentic step does not become an unrestricted source of truth.",
     keyCapabilities: [
-      "Controlled Dual-Pass Agentic Verification",
-      "Character-Offset Legal Citation Provenance",
-      "Strict Pydantic V2 Schema Validation Gates",
-      "Cryptographic SHA-256 Token Span Hashing"
+      "Controlled multi-step workflow",
+      "Structured Pydantic contracts",
+      "Explicit validation gates",
+      "Fail-closed handling of unsupported results"
     ],
     technicalSpecs: {
-      latency: "Sub-12s 500-page roundtrip analysis",
-      reliability: "Zero-hallucination compliance gate",
-      dataResidency: "Sovereign EU Enclave / Cloud Run",
-      guardrailType: "Fail-closed dual-pass deterministic validator"
+      latency: "No global latency claim",
+      reliability: "Validation state is explicit",
+      dataResidency: "Qualified per deployment",
+      guardrailType: "Schema validation + evidence boundary"
     },
     architecturalFlow: [
       {
         step: 1,
-        title: "Document Ingestion & Multi-modal Chunking",
-        description: "Ingests complex regulatory directives, generating character-level coordinate bounding boxes and lexical token spans.",
-        technology: "PyPDF & PDFPlumber Extraction Engine"
+        title: "Document & Context Intake",
+        description: "Ingests the relevant documents and structured context required by the workflow.",
+        technology: "Python / FastAPI / document processing"
       },
       {
         step: 2,
-        title: "Hybrid Retrieval & Neural Reranking",
-        description: "Fuses BM25 sparse lexical search and Qdrant dense vectors via Reciprocal Rank Fusion (k=60), scored by BGE-Reranker-Large.",
-        technology: "Qdrant Vector DB + BM25 + BGE Cross-Encoder"
+        title: "Retrieval & Evidence Selection",
+        description: "Retrieves candidate evidence before an agentic response is considered.",
+        technology: "PostgreSQL + pgvector + semantic retrieval"
       },
       {
         step: 3,
-        title: "Controlled Agentic Synthesis",
-        description: "Executes constrained legal reasoning against verified chunks, bounded strictly to retrieved citation spans with zero ungrounded generation.",
-        technology: "Pydantic V2 Schema Contract Gate"
+        title: "Controlled Synthesis",
+        description: "Applies constrained reasoning against the selected context rather than allowing unrestricted generation.",
+        technology: "LangChain + Pydantic"
       },
       {
         step: 4,
-        title: "Deterministic Provenance Verification",
-        description: "Validates extracted legal requirements with cryptographic SHA-256 token hashing; fails closed on any ungrounded claim.",
-        technology: "Cryptographic Provenance Verifier"
+        title: "Validation & State",
+        description: "The result is validated and its evidence state is kept explicit; unsupported output is not promoted to trusted evidence.",
+        technology: "Application validation gates"
       }
     ]
   },
   {
     id: "geospatial-ai",
-    name: "Triminds Geo-Spatial Engine",
-    headline: "Satellite Raster Processing & High-Dimensional Spatial Topology",
-    description: "Production geospatial intelligence engine capable of processing terabytes of multi-spectral satellite imagery daily. Converts raw earth-observation rasters into actionable vector topologies, environmental mutation alerts, and corridor risk scores.",
+    name: "Triminds Geo AI",
+    headline: "Operational Earth observation with deterministic geospatial analysis",
+    description: "The current Geo AI V4 implementation turns real Copernicus Sentinel-2 L2A observations into traceable analytical evidence and GeoJSON outputs. The production architecture is intentionally presented separately from future GPU and deep-learning directions.",
     keyCapabilities: [
-      "Sub-Pixel Multi-Spectral Raster Segmentation",
-      "Dynamic Quadkey Spatial Tiling & Caching",
-      "Temporal Matrix Change Detection Algorithms",
-      "Automated Atmospheric & Cloud Noise Normalization"
+      "Real Sentinel-2 L2A scene discovery",
+      "Cloud-Optimized GeoTIFF band extraction",
+      "Deterministic NDVI / NDRE / EVI computation",
+      "Evidence and GeoJSON generation"
     ],
     technicalSpecs: {
-      latency: "4.8M km²/day ingestion throughput",
-      reliability: "Sub-meter polygon alignment precision",
-      dataResidency: "European Copernicus Hub Integration",
-      guardrailType: "Geometric Topology Validator"
+      latency: "No global latency SLA stated",
+      reliability: "Production status is repository/deployment evidenced",
+      dataResidency: "Qualified by data source and deployment",
+      guardrailType: "Deterministic spatial and analytical validation"
     },
     architecturalFlow: [
       {
         step: 1,
-        title: "Satellite Ingestion & Orthorectification",
-        description: "Streams Sentinel-2 and commercial rasters, applying geometric distortion correction.",
-        technology: "GDAL / Rasterio Multi-band Workers"
+        title: "Scene Discovery",
+        description: "Discovers real Sentinel-2 L2A observations for the selected region of interest.",
+        technology: "AWS Earth Search STAC / Copernicus data"
       },
       {
         step: 2,
-        title: "Multi-Spectral Band Normalization",
-        description: "Normalizes NDVI, NDRE, and thermal channels to cancel atmospheric scattering.",
-        technology: "NumPy / SciPy Vectorized Compute"
+        title: "Selective Raster Access",
+        description: "Reads required Cloud-Optimized GeoTIFF bands rather than presenting synthetic imagery as production input.",
+        technology: "geotiff / COG"
       },
       {
         step: 3,
-        title: "Parallel Neural Segmentation",
-        description: "Runs custom vision transformers detecting infrastructural and natural mutations.",
-        technology: "TorchGeo / TensorRT GPU Worker Pool"
+        title: "Deterministic Analysis",
+        description: "Computes spectral indices and geospatial measurements with reproducible numerical processing.",
+        technology: "TypeScript / Float32Array / proj4"
       },
       {
         step: 4,
-        title: "Vector Polygonization & Indexing",
-        description: "Generates simplified boundary polygons and indexes them directly into PostGIS.",
-        technology: "PostGIS 3.4 Spatial Database"
+        title: "Evidence Output",
+        description: "Produces analytical evidence and GeoJSON outputs, with optional generative reporting kept as a separate layer.",
+        technology: "Express REST API / GeoJSON"
       }
     ]
   },
   {
     id: "security-observability",
-    name: "Triminds Security & Observability Gateway",
-    headline: "Zero-Trust LLM Reverse Proxy, OWASP Defense & Real-Time Telemetry",
-    description: "A hardened inline proxy layer that inspects, sanitizes, and audits all AI interactions in real time. Defends against indirect prompt injection, data exfiltration, and semantic drift while maintaining full distributed tracing.",
+    name: "Triminds Security Platform",
+    headline: "Zero-trust security, policy enforcement and observable AI boundaries",
+    description: "A Java/Spring security platform built around policy enforcement, identity and access controls, auditability and operational observability. The public site presents the implemented architecture without inventing a universal gateway SLA.",
     keyCapabilities: [
-      "Inline Token Sanitization & Homoglyph Normalization",
-      "Vector-based Prompt Injection Defense (<8ms)",
-      "Strict PII Redaction & Reversible Token Vaulting",
-      "Distributed OpenTelemetry Traces for Every Token"
+      "Open Policy Agent policy enforcement",
+      "Hexagonal architecture and domain isolation",
+      "Identity, access-control and policy services",
+      "PostgreSQL, Redis, Kafka and OpenTelemetry integration"
     ],
     technicalSpecs: {
-      latency: "Proxy overhead < 7.5ms",
-      reliability: "99.8% OWASP LLM attack block rate",
-      dataResidency: "Zero-retention volatile RAM buffers",
-      guardrailType: "Cryptographic & Semantic Firewall"
+      latency: "No global proxy-latency SLA stated",
+      reliability: "Validation and deployment status are system-specific",
+      dataResidency: "Qualified per deployment",
+      guardrailType: "Fail-closed policy enforcement + audit trail"
     },
     architecturalFlow: [
       {
         step: 1,
-        title: "Inbound Packet Inspection",
-        description: "Scans user payload for encoded injection patterns, policy violations, and PII.",
-        technology: "Spring Security & OPA Rego Engine"
+        title: "Identity & Access",
+        description: "Separates authentication and authorization concerns across dedicated security services.",
+        technology: "Java 21 / Spring Boot"
       },
       {
         step: 2,
-        title: "PII Masking & Tokenization",
-        description: "Replaces sensitive enterprise keys, national IDs, and credentials with cryptographically keyed tokens.",
-        technology: "Triminds Sovereign Pseudonymizer"
+        title: "Policy Decision",
+        description: "Evaluates authorization through explicit policy rules with fail-closed behavior.",
+        technology: "Open Policy Agent (OPA) / Rego"
       },
       {
         step: 3,
-        title: "Model Forwarding & Response Guard",
-        description: "Proxies request through Hexagonal domain ports; verifies completion for policy compliance and leaks.",
-        technology: "Reactive HTTP Gateway Engine"
+        title: "Risk & Control",
+        description: "Applies security controls and risk-oriented validation before protected operations proceed.",
+        technology: "Security services / validation layer"
       },
       {
         step: 4,
-        title: "Immutable Telemetry Logging",
-        description: "Emits latency, token counts, and cryptographic hash to immutable PostgreSQL audit store.",
-        technology: "OpenTelemetry + PostgreSQL Audit Vault"
+        title: "Audit & Telemetry",
+        description: "Records security events and exposes operational signals for investigation and observability.",
+        technology: "PostgreSQL / Redis / Kafka / OpenTelemetry"
       }
     ]
   }
