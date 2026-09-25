@@ -1,16 +1,14 @@
 import React from 'react';
-import { Terminal, ArrowUpRight, Mail, Award, CheckCircle2 } from 'lucide-react';
+import { Terminal, ArrowUpRight, Mail } from 'lucide-react';
 import { NavigationTab } from '../types';
 import { useLanguage } from '../i18n/LanguageContext';
-import { CASE_STUDIES } from '../data/caseStudiesData';
 
 interface FooterProps {
   onNavigate: (tab: NavigationTab) => void;
   onOpenVocabulary: () => void;
-  onOpenGates?: () => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, onOpenGates }) => {
+export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary }) => {
   const { t } = useLanguage();
 
   return (
@@ -33,13 +31,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
             <span>•</span>
             <span>{t('footer.gdprNotice')}</span>
             <span>•</span>
-            <button 
-              onClick={onOpenGates}
-              className="text-emerald-800 font-bold hover:underline flex items-center gap-1 cursor-pointer"
-            >
-              <Award className="w-3 h-3 text-emerald-600" />
-              <span>{t('footer.gatesCount')}</span>
-            </button>
+            <span>{t('footer.gatesCount')}</span>
           </div>
         </div>
       </div>
@@ -91,7 +83,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
                   onClick={() => onNavigate('ai-systems')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  Trusted Search Core
+                  Trusted Compliance Agent
                 </button>
               </li>
               <li>
@@ -99,7 +91,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
                   onClick={() => onNavigate('ai-systems')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  Deterministic Agentic Workflow
+                  Controlled Agentic Workflow
                 </button>
               </li>
               <li>
@@ -107,7 +99,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
                   onClick={() => onNavigate('ai-systems')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  Geospatial AI Engine
+                  Triminds Geo AI
                 </button>
               </li>
               <li>
@@ -115,7 +107,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
                   onClick={() => onNavigate('ai-systems')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  Zero-Trust LLM Gateway
+                  Triminds Security Platform
                 </button>
               </li>
               <li>
@@ -123,7 +115,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
                   onClick={() => onNavigate('projects')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  Triminds ObjectScanner V2
+                  Triminds Integration Platform
                 </button>
               </li>
               <li>
@@ -131,7 +123,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
                   onClick={() => onNavigate('projects')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer"
                 >
-                  Triminds VectorAI (VS Code)
+                  Parking Intelligence / Ontinyent
                 </button>
               </li>
             </ul>
@@ -172,20 +164,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
                   onClick={() => onNavigate('about')} 
                   className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer text-emerald-800 font-semibold"
                 >
-                  {t('audit.title')} (15)
+                  {t('audit.title')} (15 dimensions)
                 </button>
               </li>
-              {onOpenGates && (
-                <li>
-                  <button 
-                    onClick={onOpenGates} 
-                    className="hover:text-[#1A1A1A] transition-colors text-left cursor-pointer font-bold text-emerald-700 flex items-center gap-1"
-                  >
-                    <CheckCircle2 className="w-3 h-3" />
-                    <span>{t('gates.titleHighlight')}</span>
-                  </button>
-                </li>
-              )}
+
             </ul>
           </div>
 
@@ -251,12 +233,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onOpenVocabulary, on
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="text-emerald-700 font-semibold flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
-              {t('footer.allAuditsVerified')}
-            </span>
-            <span>•</span>
             <span>{t('footer.jurisdiction')}</span>
+            <span>•</span>
+            <span>Evidence status is system-specific</span>
           </div>
         </div>
       </div>
