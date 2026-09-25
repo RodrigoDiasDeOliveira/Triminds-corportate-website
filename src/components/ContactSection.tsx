@@ -53,6 +53,7 @@ export const ContactSection: React.FC = () => {
       message: 'Message',
       placeholder: 'Tell us briefly what you would like to discuss...',
       submit: 'Send Request',
+      sending: 'Sending...',
       success: 'Request prepared',
       successDesc: 'Your message was sent successfully to the Triminds team.',
       error: 'We could not send your request. Please try again or use the direct email address.',
@@ -62,6 +63,7 @@ export const ContactSection: React.FC = () => {
       message: 'Mensagem',
       placeholder: 'Descreva brevemente o que gostaria de tratar...',
       submit: 'Enviar solicitação',
+      sending: 'Enviando...',
       success: 'Solicitação preparada',
       successDesc: 'Sua mensagem foi enviada com sucesso para a equipe Triminds.',
       error: 'Não foi possível enviar sua solicitação. Tente novamente ou use o endereço de e-mail direto.',
@@ -71,6 +73,7 @@ export const ContactSection: React.FC = () => {
       message: 'Mensaje',
       placeholder: 'Describa brevemente lo que desea tratar...',
       submit: 'Enviar solicitud',
+      sending: 'Enviando...',
       success: 'Solicitud preparada',
       successDesc: 'Su mensaje se ha enviado correctamente al equipo de Triminds.',
       error: 'No se pudo enviar su solicitud. Inténtelo de nuevo o utilice la dirección de correo directo.',
@@ -80,6 +83,7 @@ export const ContactSection: React.FC = () => {
     message: 'Message',
     placeholder: 'Tell us briefly what you would like to discuss...',
     submit: 'Send Request',
+    sending: 'Sending...',
     success: 'Request prepared',
     successDesc: 'Your message was sent successfully to the Triminds team.',
     error: 'We could not send your request. Please try again or use the direct email address.',
@@ -250,7 +254,7 @@ export const ContactSection: React.FC = () => {
                 {submitError && <p role="alert" className="text-[11px] text-red-700 font-mono">{contactLabels.error}</p>}
                 <button type="submit" disabled={submitting} className="w-full py-3 rounded text-xs font-mono font-semibold bg-[#1A1A1A] hover:bg-black disabled:opacity-60 disabled:cursor-not-allowed text-white transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs">
                   <Send className="w-3.5 h-3.5" />
-                  <span>{submitting ? 'Sending...' : contactLabels.submit}</span>
+                  <span>{submitting ? contactLabels.sending : contactLabels.submit}</span>
                 </button>
               </form>
             )}
