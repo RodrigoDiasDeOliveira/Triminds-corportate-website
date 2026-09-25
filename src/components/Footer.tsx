@@ -2,6 +2,7 @@ import React from 'react';
 import { Terminal, ArrowUpRight, Mail } from 'lucide-react';
 import { NavigationTab } from '../types';
 import { useLanguage } from '../i18n/LanguageContext';
+import { CASE_STUDIES } from '../data/caseStudiesData';
 
 interface FooterProps {
   onNavigate: (tab: NavigationTab) => void;
