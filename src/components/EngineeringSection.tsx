@@ -104,10 +104,14 @@ export const EngineeringSection: React.FC = () => {
         <div className="flex items-center justify-between border-b border-[#EAEAE6] pb-3">
           <div className="flex items-center gap-2 text-xs font-mono text-[#1A1A1A] font-bold uppercase tracking-wider">
             <GitCommit className="w-4 h-4 text-[#1A1A1A]" />
-            <span>{t('eng.cicdTitle')}</span>
+            <span>Reference Production Pipeline</span>
           </div>
-          <span className="text-[10px] font-mono text-[#70706B]">GITHUB ACTIONS + ARTIFACT REGISTRY</span>
+          <span className="text-[10px] font-mono text-[#70706B]">REFERENCE PATTERN · ADAPTED PER SYSTEM MATURITY</span>
         </div>
+
+        <p className="text-[11px] text-[#70706B] leading-relaxed max-w-3xl">
+          Reference pipeline for production-oriented engineering. Individual repositories may implement a subset or a different deployment path according to their current maturity and infrastructure target.
+        </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-9 gap-2 text-center font-mono">
           {ciCdSteps.map((step, idx) => (
