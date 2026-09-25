@@ -40,7 +40,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenVocabulary }) 
           >
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>{t('about.tabMatrix')}</span>
-            <span className="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400 text-[10px]">15 AUDITED</span>
+            <span className="px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-400 text-[10px]">15 DIMENSIONS AUDITED</span>
           </button>
 
           <button
